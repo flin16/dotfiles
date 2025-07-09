@@ -1,0 +1,15 @@
+[submodule "alacritty"]
+	path = alacritty
+	url = ./alacritty/
+[submodule "fastfetch"]
+	path = fastfetch
+	url = ./fastfetch/
+[submodule "nvim"]
+	path = nvim
+	url = ./nvim/
+[submodule "tmux"]
+	path = tmux
+	url = ./tmux/
+[submodule "yazi"]
+	path = yazi
+	url = ./yazi/
