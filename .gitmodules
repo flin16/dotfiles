@@ -6,7 +6,7 @@
 	url = ./fastfetch/
 [submodule "nvim"]
 	path = nvim
-	url = ./nvim/
+	url = https://github.com/flin16/nvim
 [submodule "tmux"]
 	path = tmux
 	url = ./tmux/
