@@ -105,5 +105,9 @@ if ! yadm pull; then
   yadm ls-files | grep -v "readme.md" >$yadm_files
   tar -czf backup-dotfiles-$(date +%F-%H%M%S).tar.gz -T $yadm_files -C $HOME
   echo "Removing existing dotfiles..."
+fi
 
+if ! yadm submodule update --init --recursive; then
+  echo "Failed to update submodules. Please check your network or submodule URLs."
+  exit 1
 fi
