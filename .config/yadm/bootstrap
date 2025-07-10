@@ -1,0 +1,25 @@
+#!/bin/bash
+
+install_pkg() {
+  local pkg="$1"
+
+  if command -v apt-get >/dev/null 2>&1; then
+    echo "Installing $pkg using apt-get..."
+    sudo apt-get update
+    sudo apt-get install -y "$pkg"
+  elif command -v pacman >/dev/null 2>&1; then
+    echo "Installing $pkg using pacman..."
+    sudo pacman -Sy --noconfirm "$pkg"
+  elif command -v brew >/dev/null 2>&1; then
+    echo "Installing $pkg using brew..."
+    brew install "$pkg"
+  else
+    echo "No supported package manager (apt-get, pacman, brew) found. Please install $pkg manually."
+    return 1
+  fi
+}
+
+echo "Backing up existing dotfiles..."
+cd $HOME
+yadm ls-files | grep -v "readme.md" >/tmp/yadm_files.txt
+tar -czf backup-dotfiles-$(date +%F-%H%M%S).tar.gz -T /tmp/yadm_files.txt -C $HOME
