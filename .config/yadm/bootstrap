@@ -2,7 +2,10 @@
 
 install_pkg() {
   local pkg="$1"
-
+  if command -v pkg; then
+    echo "Package '$pkg' is already installed."
+    return 0
+  fi
   if command -v apt-get >/dev/null 2>&1; then
     echo "Installing $pkg using apt-get..."
     sudo apt-get update
@@ -123,11 +126,27 @@ if [ -n "$ZSH" ] && [ -d "$ZSH" ]; then
   echo "Oh-my-zsh is enabled."
 else
   echo "Installing Oh-my-zsh..."
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  if ! sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"; then
+    echo "Failed to install Oh-my-zsh."
+    exit 1
+  fi
 fi
 if [ "$ZSH_THEME" != "powerlevel10k/powerlevel10k" ]; then
   echo "Setting ZSH_THEME to powerlevel10k..."
   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+  sed -i.bak '/^ZSH_THEME=/d' "$HOME/.zshrc"
   echo 'ZSH_THEME="powerlevel10k/powerlevel10k"' >>"$HOME/.zshrc"
 fi
 source "$HOME/.zshrc"
+
+#Pkgs lists
+pkgs=(
+  "alacritty"
+  "fastfetch"
+  "nvim"
+  "tmux"
+  "yazi"
+)
+for repo in "${pkgs[@]}"; do
+  install_pkg "$repo"
+done
