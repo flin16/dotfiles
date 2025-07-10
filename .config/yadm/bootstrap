@@ -80,7 +80,7 @@ get_repo() {
   for repo in "${REPOS[@]}"; do
     echo "🔄 Trying clone $repo ..."
 
-    if yadm clone $repo; then
+    if yadm clone "$repo"; then
       echo "✅ Successfully pulled from $repo"
       return 0
     else
@@ -100,10 +100,10 @@ if ! yadm pull; then
   echo "yadm pull found existing files"
   check_command tar
   echo "Backing up existing dotfiles..."
-  cd $HOME
+  cd "$HOME" || exit 1
   yadm_files=$tmpdir/yadm_files.txt
-  yadm ls-files | grep -v "readme.md" >$yadm_files
-  tar -czf backup-dotfiles-$(date +%F-%H%M%S).tar.gz -T $yadm_files -C $HOME
+  yadm ls-files | grep -v "readme.md" >"$yadm_files"
+  tar -czf "backup-dotfiles-$(date +%F-%H%M%S).tar.gz" -T "$yadm_files" -C "$HOME"
   echo "Removing existing dotfiles..."
 fi
 
@@ -111,3 +111,23 @@ if ! yadm submodule update --init --recursive; then
   echo "Failed to update submodules. Please check your network or submodule URLs."
   exit 1
 fi
+
+install_pkg zsh
+if [ "$(basename "$SHELL")" != "zsh" ]; then
+  echo "Changing default shell to zsh..."
+  chsh -s "$(which zsh)"
+else
+  echo "Default shell is already zsh."
+fi
+if [ -n "$ZSH" ] && [ -d "$ZSH" ]; then
+  echo "Oh-my-zsh is enabled."
+else
+  echo "Installing Oh-my-zsh..."
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi
+if [ "$ZSH_THEME" != "powerlevel10k/powerlevel10k" ]; then
+  echo "Setting ZSH_THEME to powerlevel10k..."
+  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+  echo 'ZSH_THEME="powerlevel10k/powerlevel10k"' >>"$HOME/.zshrc"
+fi
+source "$HOME/.zshrc"
