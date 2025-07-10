@@ -94,7 +94,7 @@ get_repo() {
 }
 # end of module functions
 
-get_repo
+# get_repo
 
 if ! yadm pull; then
   echo "yadm pull found existing files"
