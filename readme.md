@@ -9,3 +9,7 @@ Then put the following code into .git/hooks/pre-commit
 echo "Push disabled on this machine."
 exit 1
 ```
+
+Change fastfetch config:
+first test the name of your disk by removing "prefix" in fastfetch/config.jsonc
+then change it to the correct disk prefix 
