@@ -28,20 +28,59 @@ check_command() {
   fi
 }
 
+confirm() {
+  local prompt="${1:-Are you sure?}"
+  local default="${2:-N}"
+  local response
+
+  if [[ "$default" == "Y" ]]; then
+    prompt="$prompt [Y/n] "
+  else
+    prompt="$prompt [y/N] "
+  fi
+  echo -n "$prompt"
+  read -r response
+
+  if [[ -z "$response" ]]; then
+    response=$default
+  fi
+
+  case "$response" in
+  [yY]) return 0 ;; # yes
+  [nN]) return 1 ;; # no
+  *)
+    echo "Invalid input. Please answer y or n."
+    return 1
+    ;;
+  esac
+}
+
 # end of utility functions
-# begin of module functions
+# begin of module functions and global variables
+
+tmpdir=$(mktemp -d)
+
 get_repo() {
   REPOS=(
     "http://10.0.0.152:3000/lfy/dotfiles"
     "http://silvertech:3000/lfy/dotfiles"
     "https://github.com/flin16/dotfiles"
   )
+  if yadm rev-parse --git-dir 2>/dev/null; then
+    if confirm "Detecting existing yadm repository, remove it?"; then
+      repo=$(yadm rev-parse --git-dir)
+      echo "Removing existing yadm repository at $repo"
+      rm -rf "$repo"
+    else
+      echo "Exiting without changes."
+      exit 1
+    fi
+  fi
 
   for repo in "${REPOS[@]}"; do
-    echo "🔄 Trying to pull from $repo ..."
-    yadm remote set-url origin "$repo"
+    echo "🔄 Trying clone $repo ..."
 
-    if yadm pull; then
+    if yadm clone $repo; then
       echo "✅ Successfully pulled from $repo"
       return 0
     else
@@ -56,7 +95,6 @@ get_repo() {
 # end of module functions
 
 get_repo
-tmpdir=$(mktemp -d)
 
 if ! yadm pull; then
   echo "yadm pull found existing files"
