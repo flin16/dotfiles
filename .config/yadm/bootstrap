@@ -146,6 +146,9 @@ pkgs=(
   "nvim"
   "tmux"
   "yazi"
+  "gcc"
+  "python"
+  "npm"
 )
 for repo in "${pkgs[@]}"; do
   install_pkg "$repo"
