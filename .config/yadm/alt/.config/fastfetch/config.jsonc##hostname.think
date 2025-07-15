@@ -43,7 +43,7 @@
     },
     {
       "type": "diskio",
-      "namePrefix": "KGB",
+      "namePrefix": "KBG",
       "key": " └  ",
       "keyColor": "33",
       "format": " {1}  {2}"
