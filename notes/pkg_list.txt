@@ -50,4 +50,9 @@ sddm
 fcitx5
 fcitx5-chinese-addons
 fcitx5-rime
+fcitx5-qt 
+fcitx5-gtk 
+fcitx5-lua
 yadm
+rsnapshot
+ncdu
