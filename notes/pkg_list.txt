@@ -1,3 +1,4 @@
+btop  # use "sudo pacman -S $(awk '{print $1}' pkg_list.txt)" to install all packages
 git
 fd
 ripgrep
@@ -46,13 +47,15 @@ kwin
 dolphin
 konsole
 kdeconnect
+kscreen
 sddm
 fcitx5
 fcitx5-chinese-addons
-fcitx5-rime
 fcitx5-qt 
 fcitx5-gtk 
 fcitx5-lua
 yadm
 rsnapshot
 ncdu
+fcitx5-rime   # Easy setup don't think too much
+fprintd   # see https://www.reddit.com/r/archlinux/comments/1gx4csq/using_fprint_with_a_fingerprint_fpc_10a59800_on/
