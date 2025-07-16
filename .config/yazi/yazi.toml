@@ -25,3 +25,6 @@ run = "mactag"
 id = "mactag"
 name = "*/"
 run = "mactag"
+
+[opener]
+edit = [{ run = 'nvim "$@"', block = true, for = "unix" }]
