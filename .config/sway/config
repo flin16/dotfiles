@@ -35,7 +35,7 @@ exec_always {
   export SDL_IM_MODULE=fcitx
   export GLFW_IM_MODULE=ibus
   fcitx5 -d
-
+  pkill -SIGUSR2 waybar
   waybar
 }
 
@@ -78,7 +78,9 @@ exec_always {
 # Read `man 5 sway-input` for more information about this section.
 input * repeat_delay 300
 input * repeat_rate 30
-
+input type:touchpad {
+    natural_scroll enabled
+}
 ### Key bindings
 #
 # Basics:
@@ -217,8 +219,13 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
+# Thinkpad fn keys:
+# bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+
 # MacOS-like keybindings:
-# empty now
+bindsym --to-code $mod+x exec wtype -M shift -P delete
+bindsym --to-code $mod+c exec wtype -M ctrl -P insert
+bindsym --to-code $mod+v exec wtype -M shift -P insert
 
 #
 # Utilities:
