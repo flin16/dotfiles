@@ -14,7 +14,7 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term alacritty
+set $term kitty
 # Your preferred application launcher
 # set $menu wmenu-run
 set $menu wofi --show drun --allow-images --hide-on-unfocus
@@ -35,7 +35,7 @@ exec_always {
   export SDL_IM_MODULE=fcitx
   export GLFW_IM_MODULE=ibus
   fcitx5 -d
-  pkill -SIGUSR2 waybar
+  # pkill -SIGUSR2 waybar
   waybar
 }
 
