@@ -1,1 +1,6 @@
+# yay -S --needed $(awk '{print $1}' aur_list.txt | grep -v '#')
 bluetuith
+aic94xx-firmware
+upd72020x-fw
+wd719x-firmware
+ast-firmware
