@@ -70,3 +70,4 @@ brightnessctl
 zip
 unzip
 nodejs
+tmux
