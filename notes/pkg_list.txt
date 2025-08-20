@@ -67,3 +67,4 @@ wofi
 waybar
 # firmware
 linux-firmware-qlogic
+brightnessctl
