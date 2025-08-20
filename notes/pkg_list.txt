@@ -11,8 +11,7 @@ openssh
 networkmanager
 iptables
 pipewire
-pipewire-pulse
-pipewire-session-manager
+pipewire-pulse pipewire-session-manager
 wireplumber
 alsa-ucm-conf
 alsa-lib
@@ -68,3 +67,7 @@ waybar
 # firmware
 linux-firmware-qlogic
 brightnessctl
+zip
+unzip
+nodejs
+tmux
