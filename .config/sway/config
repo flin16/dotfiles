@@ -35,10 +35,8 @@ exec_always {
   export SDL_IM_MODULE=fcitx
   export GLFW_IM_MODULE=ibus
   fcitx5 -d
-  # pkill -SIGUSR2 waybar
-  waybar
 }
-
+exec waybar
 #
 # Example configuration:
 #
@@ -182,6 +180,9 @@ input type:touchpad {
 
     # Move focus to the parent container
     bindsym $mod+a focus parent
+
+    # Move focus to the child container
+    bindsym $mod+Shift+a focus child
 #
 # Scratchpad:
 #
@@ -224,7 +225,7 @@ bindsym $mod+r mode "resize"
 
 # MacOS-like keybindings:
 bindsym --to-code $mod+x exec wtype -M shift -P delete
-bindsym --to-code $mod+c exec wtype -M ctrl -P insert
+bindsym --to-code $mod+c exec wtype -M ctrl -M shift -P c -p c -m shift -m ctrl
 bindsym --to-code $mod+v exec wtype -M shift -P insert
 
 #
@@ -262,4 +263,3 @@ bindsym --to-code $mod+v exec wtype -M shift -P insert
 #     }
 # }
 
-include /etc/sway/config.d/*
