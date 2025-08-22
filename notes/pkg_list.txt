@@ -73,3 +73,5 @@ nodejs
 tmux
 yazi
 npm
+neovim
+kitty
