@@ -75,3 +75,4 @@ yazi
 npm
 neovim
 kitty
+starship
