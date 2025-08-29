@@ -76,3 +76,15 @@ npm
 neovim
 kitty
 starship
+pcmanfm
+dex
+wlsunset
+kanshi
+rofi
+network-manager-applet
+mako
+swappy
+wl-clipboard
+cliphist
+calcurse
+playerctl
