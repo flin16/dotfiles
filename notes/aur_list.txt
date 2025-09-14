@@ -5,3 +5,4 @@ upd72020x-fw
 wd719x-firmware
 ast-firmware
 fcitx5-sogou
+swaymsg
