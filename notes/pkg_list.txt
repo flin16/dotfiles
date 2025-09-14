@@ -89,3 +89,5 @@ cliphist
 calcurse
 playerctl
 foot
+ly # for login manager use 'sudo systemctl enable ly'
+python-yaml
