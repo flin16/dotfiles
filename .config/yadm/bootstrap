@@ -18,16 +18,29 @@ fi
 
 echo "Powerlevel10k installed! Restart your terminal and run 'p10k configure' to finish setup."
 
-tmpdir=$(mktemp -d)
-cd "$tmpdir"
+if command -v yay; then
+  echo "yay is already installed. Version:"
+  yay --version
+else
+  tmpdir=$(mktemp -d)
+  cd "$tmpdir"
 
-git clone https://aur.archlinux.org/yay.git
-cd yay
+  git clone https://aur.archlinux.org/yay.git
+  cd yay
 
-makepkg -si
+  makepkg -si --noconfirm
 
-cd ~
-rm -rf "$tmpdir"
+  cd ~
+  rm -rf "$tmpdir"
 
-echo "yay installed successfully! Version:"
-yay --version
+  echo "yay installed successfully! Version:"
+  yay --version
+fi
+echo "Do you want to enable Git credential caching (store credentials in ~/.git-credentials)? [y/N]"
+read -r response
+if [[ "$response" =~ ^[Yy]$ ]]; then
+  git config --global credential.helper store
+  echo "Git credential helper enabled. Your credentials will be saved in ~/.git-credentials."
+else
+  echo "Skipped enabling Git credential helper."
+fi
