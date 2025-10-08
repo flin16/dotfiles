@@ -1,155 +1,33 @@
 #!/bin/bash
+set -e
 
-install_pkg() {
-  local pkg="$1"
-  if command -v pkg; then
-    echo "Package '$pkg' is already installed."
-    return 0
-  fi
-  if command -v apt-get >/dev/null 2>&1; then
-    echo "Installing $pkg using apt-get..."
-    sudo apt-get update
-    sudo apt-get install -y "$pkg"
-  elif command -v pacman >/dev/null 2>&1; then
-    echo "Installing $pkg using pacman..."
-    sudo pacman -Sy --noconfirm "$pkg"
-  elif command -v brew >/dev/null 2>&1; then
-    echo "Installing $pkg using brew..."
-    brew install "$pkg"
-  else
-    echo "No supported package manager (apt-get, pacman, brew) found. Please install $pkg manually."
-    exit 1
-  fi
-}
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+fi
 
-check_command() {
-  local cmd="$1"
-  echo "Checking for command: $cmd"
-  if ! command -v "$cmd" >/dev/null 2>&1; then
-    echo "Command '$cmd' not found. Installing..."
-    install_pkg "$cmd"
-  fi
-}
+if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" ]; then
+  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \
+    "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+fi
 
-confirm() {
-  local prompt="${1:-Are you sure?}"
-  local default="${2:-N}"
-  local response
+ZSHRC="$HOME/.zshrc"
+if ! grep -q 'ZSH_THEME="powerlevel10k/powerlevel10k"' "$ZSHRC"; then
+  sed -i 's/^ZSH_THEME=.*/ZSH_THEME="powerlevel10k\/powerlevel10k"/' "$ZSHRC" ||
+    echo 'ZSH_THEME="powerlevel10k/powerlevel10k"' >>"$ZSHRC"
+fi
 
-  if [[ "$default" == "Y" ]]; then
-    prompt="$prompt [Y/n] "
-  else
-    prompt="$prompt [y/N] "
-  fi
-  echo -n "$prompt"
-  read -r response
-
-  if [[ -z "$response" ]]; then
-    response=$default
-  fi
-
-  case "$response" in
-  [yY]) return 0 ;; # yes
-  [nN]) return 1 ;; # no
-  *)
-    echo "Invalid input. Please answer y or n."
-    return 1
-    ;;
-  esac
-}
-
-# end of utility functions
-# begin of module functions and global variables
+echo "Powerlevel10k installed! Restart your terminal and run 'p10k configure' to finish setup."
 
 tmpdir=$(mktemp -d)
+cd "$tmpdir"
 
-get_repo() {
-  REPOS=(
-    "http://10.0.0.152:3000/lfy/dotfiles"
-    "http://silvertech:3000/lfy/dotfiles"
-    "https://github.com/flin16/dotfiles"
-  )
-  if yadm rev-parse --git-dir 2>/dev/null; then
-    if confirm "Detecting existing yadm repository, remove it?"; then
-      repo=$(yadm rev-parse --git-dir)
-      echo "Removing existing yadm repository at $repo"
-      rm -rf "$repo"
-    else
-      echo "Exiting without changes."
-      exit 1
-    fi
-  fi
+git clone https://aur.archlinux.org/yay.git
+cd yay
 
-  for repo in "${REPOS[@]}"; do
-    echo "🔄 Trying clone $repo ..."
+makepkg -si
 
-    if yadm clone "$repo"; then
-      echo "✅ Successfully pulled from $repo"
-      return 0
-    else
-      echo "❌ Failed to pull from $repo"
-      echo "Failing back to next repository in the list..."
-    fi
-  done
+cd ~
+rm -rf "$tmpdir"
 
-  echo "🚨 All attempts failed. Please check your network or remote URLs."
-  exit 1
-}
-# end of module functions
-
-# get_repo
-
-if ! yadm pull; then
-  echo "yadm pull found existing files"
-  check_command tar
-  echo "Backing up existing dotfiles..."
-  cd "$HOME" || exit 1
-  yadm_files=$tmpdir/yadm_files.txt
-  yadm ls-files | grep -v "readme.md" >"$yadm_files"
-  tar -czf "backup-dotfiles-$(date +%F-%H%M%S).tar.gz" -T "$yadm_files" -C "$HOME"
-  echo "Removing existing dotfiles..."
-fi
-
-if ! yadm submodule update --init --recursive; then
-  echo "Failed to update submodules. Please check your network or submodule URLs."
-  exit 1
-fi
-
-install_pkg zsh
-if [ "$(basename "$SHELL")" != "zsh" ]; then
-  echo "Changing default shell to zsh..."
-  chsh -s "$(which zsh)"
-else
-  echo "Default shell is already zsh."
-fi
-if [ -n "$ZSH" ] && [ -d "$ZSH" ]; then
-  echo "Oh-my-zsh is enabled."
-else
-  echo "Installing Oh-my-zsh..."
-  if ! sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"; then
-    echo "Failed to install Oh-my-zsh."
-    exit 1
-  fi
-fi
-if [ "$ZSH_THEME" != "powerlevel10k/powerlevel10k" ]; then
-  echo "Setting ZSH_THEME to powerlevel10k..."
-  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
-  sed -i.bak '/^ZSH_THEME=/d' "$HOME/.zshrc"
-  echo 'ZSH_THEME="powerlevel10k/powerlevel10k"' >>"$HOME/.zshrc"
-fi
-source "$HOME/.zshrc"
-
-#Pkgs lists
-pkgs=(
-  "alacritty"
-  "fastfetch"
-  "nvim"
-  "tmux"
-  "yazi"
-  "gcc"
-  "python"
-  "npm"
-)
-for repo in "${pkgs[@]}"; do
-  install_pkg "$repo"
-done
+echo "yay installed successfully! Version:"
+yay --version
