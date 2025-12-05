@@ -1,0 +1,8 @@
+#!/bin/bash
+source ~/venv/openwebui/bin/activate
+
+if [[ "$1" == "-u" ]]; then
+  pip install --upgrade open-webui
+else
+  open-webui serve
+fi
