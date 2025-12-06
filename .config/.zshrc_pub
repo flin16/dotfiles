@@ -1,2 +1,5 @@
 alias ff=fastfetch
 alias ly='lazygit -ucd ~/.local/share/yadm/lazygit -w ~ -g ~/.local/share/yadm/repo.git'
+
+#be carefull with anything about spending
+export OPENAI_API_KEY="REDACTED_OPENAI_KEY"
