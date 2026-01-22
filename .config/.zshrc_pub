@@ -1,5 +1,33 @@
 alias ff=fastfetch
 alias ly='lazygit -ucd ~/.local/share/yadm/lazygit -w ~ -g ~/.local/share/yadm/repo.git'
+alias dc='docker-compose'
 
 #be carefull with anything about spending
 export OPENAI_API_KEY="REDACTED_OPENAI_KEY"
+
+# before every completion
+autoload -Uz compinit && compinit
+
+venv() {
+    if [ -z "$1" ]; then
+        ls ~/venv/
+        return
+    fi
+
+    local target="$HOME/venv/$1"
+    if [ -d "$target" ]; then
+        deactivate 2>/dev/null
+        source "$target/bin/activate"
+        echo "✅ Switched to virtualenv: $1"
+    else
+        echo "❌ Virtualenv not found: $target"
+    fi
+}
+
+_venv_completions() {
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=( $(compgen -W "$(ls ~/venv/)" -- "$cur") )
+}
+
+complete -F _venv_completions venv
+
