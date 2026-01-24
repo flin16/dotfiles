@@ -31,3 +31,4 @@ Conda + Sage + JupyterHub 配置指南
 
 • 清理缓存: `mamba clean --all`
 
+查看 service文件你就知道环境在哪里了
