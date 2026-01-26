@@ -6,6 +6,8 @@
 #         without any warranty.
 #         Copyright 2012— Gregory Pakosz (@gpakosz).
 
+# --custom keybindings ----------------------------------------------------------
+bind-key g command-prompt -p "get pane from:" "join-pane -s '%%'"
 
 # -- bindings ------------------------------------------------------------------
 
@@ -449,7 +451,7 @@ set -g @plugin 'tmux-plugins/tmux-copycat'
 set -g @plugin 'tmux-plugins/tmux-cpu'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 # set -g @plugin 'tmux-plugins/tmux-continuum'
-set -g @plugin 'alexwforsythe/tmux-which-key'
+# set -g @plugin 'alexwforsythe/tmux-which-key'
 set -g @continuum-restore 'on'
 
 
