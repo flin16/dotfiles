@@ -93,3 +93,4 @@ ly # for login manager use 'sudo systemctl enable ly'
 python-yaml
 make
 base-devel
+bun
