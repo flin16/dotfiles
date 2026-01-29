@@ -1,3 +1,5 @@
+plugins=(python zsh-syntax-highlighting fzf)
+
 alias ff=fastfetch
 alias ly='lazygit -ucd ~/.local/share/yadm/lazygit -w ~ -g ~/.local/share/yadm/repo.git'
 alias dc='docker-compose'

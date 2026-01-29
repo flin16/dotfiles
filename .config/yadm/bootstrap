@@ -18,10 +18,26 @@ fi
 
 echo "Powerlevel10k installed! Restart your terminal and run 'p10k configure' to finish setup."
 
-if command -v yay; then
-  echo "yay is already installed. Version:"
-  yay --version
+plugin_line=$(grep '^plugins=' "$HOME/.config/.zshrc_pub")
+if [ -n "$plugin_line" ]; then
+  plugin_content=$(echo "$plugin_line" | sed -e 's/plugins=(//' -e 's/)//')
+
+  plugins=($plugin_content)
+
+  for plugin in "${plugins[@]}"; do
+    repo="https://github.com/${plugin}/${plugin}"
+
+    target_dir="$HOME/.oh-my-zsh/custom/plugins/$plugin"
+    if [ ! -d "$target_dir" ]; then
+      echo "Installing: $plugin..."
+      git clone --depth 1 "$repo" "$target_dir"
+    fi
+  done
 else
+  echo "No plugins line found"
+fi
+
+if grep -qi 'arch' /etc/os-release; then
   tmpdir=$(mktemp -d)
   cd "$tmpdir"
 
@@ -35,7 +51,10 @@ else
 
   echo "yay installed successfully! Version:"
   yay --version
+else
+  echo "This script only installs yay on Arch Linux systems."
 fi
+
 echo "Do you want to enable Git credential caching (store credentials in ~/.git-credentials)? [y/N]"
 read -r response
 if [[ "$response" =~ ^[Yy]$ ]]; then
