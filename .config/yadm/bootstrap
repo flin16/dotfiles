@@ -25,7 +25,7 @@ if [ -n "$plugin_line" ]; then
   plugins=($plugin_content)
 
   for plugin in "${plugins[@]}"; do
-    repo="https://github.com/${plugin}/${plugin}"
+    repo="git@github.com:${plugin}/${plugin}.git"
 
     target_dir="$HOME/.oh-my-zsh/custom/plugins/$plugin"
     if [ ! -d "$target_dir" ]; then
