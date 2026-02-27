@@ -94,3 +94,4 @@ python-yaml
 make
 base-devel
 bun
+kernel-modules-hook
