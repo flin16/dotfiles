@@ -1,4 +1,4 @@
-plugins=(python zsh-syntax-highlighting fzf)
+plugins=(python zsh-syntax-highlighting fzf z)
 
 alias ff=fastfetch
 alias ly='lazygit -ucd ~/.local/share/yadm/lazygit -w ~ -g ~/.local/share/yadm/repo.git'
