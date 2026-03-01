@@ -1,3 +1,4 @@
+# go install github.com/m7medvision/lazycommit@latest
 customCommands:
   - key: "<c-a>" # ctrl + a
     description: "pick AI commit"
@@ -7,8 +8,7 @@ customCommands:
       - type: "menuFromCommand"
         title: "ai Commits"
         key: "Msg"
-        command: 'zsh -ci "bunx @m7medvision/lazycommit@latest"'
-        filter: '^(?P<number>\d+)\.\s(?P<message>.+)$'
-        valueFormat: "{{ .message }}"
-        labelFormat: "{{ .number }}: {{ .message | green }}"
-
+        command: "lazycommit commit"
+        filter: '^(?P<raw>.+)$'
+        valueFormat: "{{ .raw }}"
+        labelFormat: "{{ .raw | green }}"
