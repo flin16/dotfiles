@@ -1,3 +1,5 @@
+export PATH="$PATH:$HOME/go/bin"
+
 plugins=(python zsh-syntax-highlighting fzf z)
 
 alias ff=fastfetch
@@ -50,3 +52,4 @@ fi
 source "$FZF_PATH/key-bindings.zsh"
 source "$FZF_PATH/completion.zsh"
 
+eval "$(zoxide init zsh)"
