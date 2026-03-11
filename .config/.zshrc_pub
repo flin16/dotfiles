@@ -8,7 +8,12 @@ alias dc='docker-compose'
 
 #be carefull with anything about spending
 export OPENAI_API_KEY="REDACTED_OPENAI_KEY"
-export API_KEY=$OPENAI_API_KEY
+
+KEY_PATH="$HOME/.config/.keys"
+if [ -f $KEY_PATH ]; then
+    source $KEY_PATH
+    export $(grep -v '^#' $KEY_PATH | grep '=' | awk -F= '{print $1}')
+fi
 
 # Check if the ssh-agent socket exists in the XDG_RUNTIME_DIR
 # On archlinux use systemctl --user start ssh-agent.service to start it
