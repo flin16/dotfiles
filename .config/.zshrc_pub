@@ -1,0 +1,58 @@
+export PATH="$PATH:$HOME/go/bin"
+
+plugins=(python zsh-syntax-highlighting fzf z)
+
+alias ff=fastfetch
+alias ly='lazygit -ucd ~/.local/share/yadm/lazygit -w ~ -g ~/.local/share/yadm/repo.git'
+alias dc='docker-compose'
+
+
+KEY_PATH="$HOME/.config/.keys"
+if [ -f $KEY_PATH ]; then
+    source $KEY_PATH
+    export $(grep -v '^#' $KEY_PATH | grep '=' | awk -F= '{print $1}')
+fi
+
+# Check if the ssh-agent socket exists in the XDG_RUNTIME_DIR
+# On archlinux use systemctl --user start ssh-agent.service to start it
+if [[ -S "$XDG_RUNTIME_DIR/ssh-agent.socket" ]]; then
+    export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+fi
+
+# before every completion
+autoload -Uz compinit && compinit
+autoload -Uz bashcompinit && bashcompinit
+
+venv() {
+    if [ -z "$1" ]; then
+        ls ~/venv/
+        return
+    fi
+
+    local target="$HOME/venv/$1"
+    if [ -d "$target" ]; then
+        deactivate 2>/dev/null
+        source "$target/bin/activate"
+        echo "✅ Switched to virtualenv: $1"
+    else
+        echo "❌ Virtualenv not found: $target"
+    fi
+}
+
+_venv_completions() {
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=( $(compgen -W "$(ls ~/venv/)" -- "$cur") )
+}
+
+complete -F _venv_completions venv
+
+if [[ "$(uname)" == "Darwin" ]]; then
+  FZF_PATH="/opt/homebrew/opt/fzf/shell/"
+else
+  FZF_PATH="/usr/share/fzf"
+fi
+
+source "$FZF_PATH/key-bindings.zsh"
+source "$FZF_PATH/completion.zsh"
+
+eval "$(zoxide init zsh)"
