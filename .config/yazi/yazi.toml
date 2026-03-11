@@ -28,3 +28,6 @@ run = "mactag"
 
 [opener]
 edit = [{ run = 'nvim "$@"', block = true, for = "unix" }]
+
+[manager]
+linemode = "git"
