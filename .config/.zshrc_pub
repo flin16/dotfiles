@@ -6,8 +6,6 @@ alias ff=fastfetch
 alias ly='lazygit -ucd ~/.local/share/yadm/lazygit -w ~ -g ~/.local/share/yadm/repo.git'
 alias dc='docker-compose'
 
-#be carefull with anything about spending
-export OPENAI_API_KEY="REDACTED_OPENAI_KEY"
 
 KEY_PATH="$HOME/.config/.keys"
 if [ -f $KEY_PATH ]; then
