@@ -1,6 +1,6 @@
 export PATH="$PATH:$HOME/go/bin"
 
-plugins=(python zsh-syntax-highlighting fzf z)
+plugins=(python fzf z per-directory-history)
 
 alias ff=fastfetch
 alias ly='lazygit -ucd ~/.local/share/yadm/lazygit -w ~ -g ~/.local/share/yadm/repo.git'
@@ -56,3 +56,4 @@ source "$FZF_PATH/key-bindings.zsh"
 source "$FZF_PATH/completion.zsh"
 
 eval "$(zoxide init zsh)"
+
