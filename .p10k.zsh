@@ -92,7 +92,8 @@
     nix_shell               # nix shell (https://nixos.org/nixos/nix-pills/developing-with-nix-shell.html)
     chezmoi_shell           # chezmoi shell (https://www.chezmoi.io/)
     # vpn_ip                # virtual private network indicator
-    # load                  # CPU load
+    network_load          # custom segment
+    load                  # CPU load
     # disk_usage            # disk usage
     ram                   # free RAM
     # swap                  # used swap
@@ -102,7 +103,7 @@
     per_directory_history   # Oh My Zsh per-directory-history local/global indicator
     # cpu_arch              # CPU architecture
     time                    # current time
-    # ip                    # ip address and bandwidth usage for a specified network interface
+    ip                    # ip address and bandwidth usage for a specified network interface
     # public_ip             # public IP address
     # proxy                 # system-wide http/https/ftp proxy
     # battery               # internal battery
@@ -1576,12 +1577,16 @@
   #   P9K_IP_TX_BYTES_DELTA | number of bytes sent since last prompt
   #   P9K_IP_RX_RATE        | receive rate (since last prompt)
   #   P9K_IP_TX_RATE        | send rate (since last prompt)
-  typeset -g POWERLEVEL9K_IP_CONTENT_EXPANSION='$P9K_IP_IP${P9K_IP_RX_RATE:+ %70F⇣$P9K_IP_RX_RATE}${P9K_IP_TX_RATE:+ %215F⇡$P9K_IP_TX_RATE}'
+  # typeset -g POWERLEVEL9K_IP_CONTENT_EXPANSION='$P9K_IP_IP${P9K_IP_RX_RATE:+ %70F⇣$P9K_IP_RX_RATE}${P9K_IP_TX_RATE:+ %215F⇡$P9K_IP_TX_RATE}'
+  # Removed to use my own custom segment that shows network load in a more compact way. See function prompt_network_load above.
+  typeset -g POWERLEVEL9K_IP_CONTENT_EXPANSION=''
   # Show information for the first network interface whose name matches this regular expression.
   # Run `ifconfig` or `ip -4 a show` to see the names of all network interfaces.
   typeset -g POWERLEVEL9K_IP_INTERFACE='[ew].*'
   # Custom icon.
   # typeset -g POWERLEVEL9K_IP_VISUAL_IDENTIFIER_EXPANSION='⭐'
+  # Removed to use my own custom segment that shows network load in a more compact way. See function prompt_network_load above.
+  typeset -g POWERLEVEL9K_IP_VISUAL_IDENTIFIER_EXPANSION=''
 
   #########################[ proxy: system-wide http/https/ftp proxy ]##########################
   # Proxy color.
@@ -1651,6 +1656,15 @@
     p10k segment -f 208 -i '⭐' -t 'hello, %n'
   }
 
+  function prompt_network_load() {
+    [[ -z $P9K_IP_RX_RATE ]] && return
+    local rx=${P9K_IP_RX_RATE//iB\/s/B}
+    rx=${rx//B\/s/B}
+    local tx=${P9K_IP_TX_RATE//iB\/s/B}
+    tx=${rx//B\/s/B}
+    p10k segment -b none -f 7 -t "%70F⇣$rx %215F⇡$tx"
+  }
+
   # User-defined prompt segments may optionally provide an instant_prompt_* function. Its job
   # is to generate the prompt segment for display in instant prompt. See
   # https://github.com/romkatv/powerlevel10k#instant-prompt.
@@ -1683,8 +1697,8 @@
   #               typed after changing current working directory.
   typeset -g POWERLEVEL9K_TRANSIENT_PROMPT=off
 
-  function p10k-on-post-prompt() { p10k display '1/left/dir'=hide '1/right/ram'=show}
-  function p10k-on-pre-prompt()  { p10k display '1/left/dir'=show '1/right/ram'=hide }
+  function p10k-on-post-prompt() { p10k display '1/left/(dir|os_icon)'=hide '1/right/(ram|load|network_load)'=show}
+  function p10k-on-pre-prompt()  { p10k display '1/left/(dir|os_icon)'=show '1/right/(ram|load|network_load)'=hide }
 
   # Instant prompt mode.
   #
