@@ -1656,12 +1656,23 @@
     p10k segment -f 208 -i '⭐' -t 'hello, %n'
   }
 
+  # Helper function to clean up the rate string
+  function _clean_rate() {
+    local rate="$1"
+    rate=${rate//iB\/s/B}
+    rate=${rate//B\/s/B}
+    rate=${rate//KB/K}
+    rate=${rate//MB/M}
+    rate=${rate//GB/G}
+    rate=${rate// /}
+    rate=${rate/(#b)(<0-9>).<0-9>#/$match[1]}
+    echo "$rate"
+  }
+
   function prompt_network_load() {
     [[ -z $P9K_IP_RX_RATE ]] && return
-    local rx=${P9K_IP_RX_RATE//iB\/s/B}
-    rx=${rx//B\/s/B}
-    local tx=${P9K_IP_TX_RATE//iB\/s/B}
-    tx=${rx//B\/s/B}
+    local rx=$(_clean_rate "$P9K_IP_RX_RATE")
+    local tx=$(_clean_rate "$P9K_IP_TX_RATE")
     p10k segment -b none -f 7 -t "%70F⇣$rx %215F⇡$tx"
   }
 
@@ -1697,8 +1708,8 @@
   #               typed after changing current working directory.
   typeset -g POWERLEVEL9K_TRANSIENT_PROMPT=off
 
-  function p10k-on-post-prompt() { p10k display '1/left/(dir|os_icon)'=hide '1/right/(ram|load|network_load)'=show}
-  function p10k-on-pre-prompt()  { p10k display '1/left/(dir|os_icon)'=show '1/right/(ram|load|network_load)'=hide }
+  function p10k-on-post-prompt() { p10k display '1/left/(vcs|os_icon)'=hide '1/right/(ram|load|network_load)'=show '1/right/context'=hide}
+  function p10k-on-pre-prompt()  { p10k display '1/left/(vcs|os_icon)'=show '1/right/(ram|load|network_load)'=hide '1/right/context'=show}
 
   # Instant prompt mode.
   #
