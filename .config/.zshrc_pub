@@ -1,4 +1,4 @@
-export PATH="$PATH:$HOME/go/bin"
+export PATH="$PATH:$HOME/go/bin:$HOME/bin"
 
 plugins=(python fzf z per-directory-history)
 

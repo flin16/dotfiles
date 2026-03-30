@@ -1708,8 +1708,8 @@
   #               typed after changing current working directory.
   typeset -g POWERLEVEL9K_TRANSIENT_PROMPT=off
 
-  function p10k-on-post-prompt() { p10k display '1/left/(dir|os_icon)'=hide '1/right/(ram|load|network_load)'=show '1/right/context'=hide}
-  function p10k-on-pre-prompt()  { p10k display '1/left/(dir|os_icon)'=show '1/right/(ram|load|network_load)'=hide '1/right/context'=show}
+  function p10k-on-post-prompt() { p10k display '1/left/(vcs|os_icon)'=hide '1/right/(ram|load|network_load)'=show '1/right/context'=hide}
+  function p10k-on-pre-prompt()  { p10k display '1/left/(vcs|os_icon)'=show '1/right/(ram|load|network_load)'=hide '1/right/context'=show}
 
   # Instant prompt mode.
   #

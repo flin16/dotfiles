@@ -18,24 +18,21 @@ fi
 
 echo "Powerlevel10k installed! Restart your terminal and run 'p10k configure' to finish setup."
 
-plugin_line=$(grep '^plugins=' "$HOME/.config/.zshrc_pub")
-if [ -n "$plugin_line" ]; then
-  plugin_content=$(echo "$plugin_line" | sed -e 's/plugins=(//' -e 's/)//')
-
-  plugins=($plugin_content)
-
-  for plugin in "${plugins[@]}"; do
-    repo="git@github.com:${plugin}/${plugin}.git"
-
-    target_dir="$HOME/.oh-my-zsh/custom/plugins/$plugin"
-    if [ ! -d "$target_dir" ]; then
-      echo "Installing: $plugin..."
-      git clone --depth 1 "$repo" "$target_dir"
-    fi
-  done
-else
-  echo "No plugins line found"
-fi
+# if [ -n "$plugins" ]; then
+#   plugin_content=$(echo "$plugins" | sed -e 's/plugins=(//' -e 's/)//')
+#
+#   for plugin in "${plugins[@]}"; do
+#     repo="git@github.com:${plugin}/${plugin}.git"
+#
+#     target_dir="$HOME/.oh-my-zsh/custom/plugins/$plugin"
+#     if [ ! -d "$target_dir" ]; then
+#       echo "Installing: $plugin..."
+#       git clone --depth 1 "$repo" "$target_dir"
+#     fi
+#   done
+# else
+#   echo "No plugins line found"
+# fi
 
 if grep -qi 'arch' /etc/os-release; then
   tmpdir=$(mktemp -d)
