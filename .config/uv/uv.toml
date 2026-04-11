@@ -1,0 +1,3 @@
+concurrent-installs = 4
+
+index-url = "https://pypi.org/simple/"
