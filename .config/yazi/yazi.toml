@@ -26,6 +26,10 @@ id = "mactag"
 name = "*/"
 run = "mactag"
 
+[[plugin.prepend_previewers]]
+mime = "image/*"
+run = "chafa --symbols=vhal --fill=blocks --fg-only --colors=256 --size=!!:40 \"$@\""
+
 [opener]
 edit = [{ run = 'nvim "$@"', block = true, for = "unix" }]
 
