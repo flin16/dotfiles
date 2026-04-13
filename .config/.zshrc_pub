@@ -1,4 +1,5 @@
 export PATH="$PATH:$HOME/go/bin:$HOME/bin:$HOME/.local/bin:$HOME/.elan/bin"
+export UV_PROJECT_ENVIRONMENT="$HOME/.cache/uv-envs${PWD//\//-}"
 
 alias ff=fastfetch
 alias ly='lazygit -ucd ~/.local/share/yadm/lazygit -w ~ -g ~/.local/share/yadm/repo.git'
