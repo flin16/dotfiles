@@ -95,3 +95,4 @@ make
 base-devel
 bun
 kernel-modules-hook
+zsh-autocomplete
