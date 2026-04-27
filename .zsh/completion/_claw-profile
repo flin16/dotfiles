@@ -1,0 +1,24 @@
+#compdef claw-profile
+
+local -a cmds
+cmds=(list add activate deactivate remove show import export)
+
+local -a type_list
+type_list=(coding writing research review security-review general)
+
+case $words[2] in
+  activate|remove|show|export)
+    local -a profiles
+    profiles=(${(f)"$(claw-profile _complete_profiles 2>/dev/null)"})
+    _describe 'profile' profiles
+    ;;
+  add)
+    _describe 'type' type_list
+    ;;
+  import)
+    _files
+    ;;
+  *)
+    compadd $cmds
+    ;;
+esac

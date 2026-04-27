@@ -1,0 +1,265 @@
+#!/usr/bin/env python3
+"""
+claw-profile — manage Claude Code profile configurations.
+
+Profiles are stored in ~/.config/claw-profile/<name>.json.
+Activated profiles are merged into .claude/settings.json.
+"""
+
+import argparse
+import json
+import sys
+from pathlib import Path
+
+PROFILE_DIR = Path.home() / ".config" / "claw-profile"
+SETTINGS_FILE = Path(".claude") / "settings.json"
+PROFILE_TYPES = ["coding", "writing", "research", "review", "security-review", "general"]
+
+
+def ensure_profile_dir():
+    PROFILE_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def list_profiles():
+    ensure_profile_dir()
+    return sorted([p.stem for p in PROFILE_DIR.glob("*.json")])
+
+
+def load_profile(name: str) -> dict | None:
+    path = PROFILE_DIR / f"{name}.json"
+    if path.exists():
+        return json.loads(path.read_text())
+    return None
+
+
+def get_active_profile() -> str | None:
+    if SETTINGS_FILE.exists():
+        data = json.loads(SETTINGS_FILE.read_text())
+        return data.get("activeProfile")
+    return None
+
+
+def save_profile(name: str, data: dict):
+    ensure_profile_dir()
+    path = PROFILE_DIR / f"{name}.json"
+    path.write_text(json.dumps(data, indent=2, ensure_ascii=False))
+    print(f"Profile '{name}' saved to {path}")
+
+
+def remove_profile(name: str):
+    path = PROFILE_DIR / f"{name}.json"
+    if path.exists():
+        path.unlink()
+        print(f"Profile '{name}' removed.")
+    else:
+        print(f"Profile '{name}' not found in {PROFILE_DIR}", file=sys.stderr)
+        sys.exit(1)
+
+
+def activate_profile(name: str):
+    profile = load_profile(name)
+    if not profile:
+        print(f"Profile '{name}' not found.", file=sys.stderr)
+        sys.exit(1)
+
+    settings = profile.get("settings", {})
+    settings["activeProfile"] = name
+
+    SETTINGS_FILE.parent.mkdir(parents=True, exist_ok=True)
+
+    if SETTINGS_FILE.exists():
+        existing = json.loads(SETTINGS_FILE.read_text())
+        existing.pop("activeProfile", None)
+    else:
+        existing = {}
+
+    for key, val in settings.items():
+        if key == "permissions":
+            existing_perms = existing.get("permissions", {}).get("allow", [])
+            new_perms = val.get("allow", [])
+            existing.setdefault("permissions", {})["allow"] = list(
+                dict.fromkeys(existing_perms + new_perms)
+            )
+        else:
+            existing[key] = val
+
+    SETTINGS_FILE.write_text(json.dumps(existing, indent=2, ensure_ascii=False))
+    print(f"Profile '{name}' activated. Updated {SETTINGS_FILE}")
+
+
+def deactivate_profile():
+    if not SETTINGS_FILE.exists():
+        print("No active profile to deactivate.")
+        return
+    data = json.loads(SETTINGS_FILE.read_text())
+    profile_name = data.pop("activeProfile", None)
+    if profile_name:
+        SETTINGS_FILE.write_text(json.dumps(data, indent=2, ensure_ascii=False))
+        print(f"Profile '{profile_name}' deactivated.")
+    else:
+        print("No active profile.")
+
+
+def show_profile(name: str):
+    profile = load_profile(name)
+    if not profile:
+        print(f"Profile '{name}' not found.", file=sys.stderr)
+        sys.exit(1)
+    print(json.dumps(profile, indent=2, ensure_ascii=False))
+
+
+def cmd_add(args):
+    name = args.name
+    ptype = args.type
+    description = args.description
+    data = {
+        "name": name,
+        "type": ptype,
+        "description": description,
+        "settings": {
+            "permissions": {"allow": []}
+        }
+    }
+    save_profile(name, data)
+    if args.activate:
+        activate_profile(name)
+
+
+def cmd_list(args):
+    profiles = list_profiles()
+    active = get_active_profile()
+    if not profiles:
+        print("(no profiles — use claw-profile add to create one)")
+    else:
+        for n in profiles:
+            mark = " [active]" if n == active else ""
+            print(f"  {n}{mark}")
+    if active:
+        print(f"\nActive: {active}")
+    else:
+        print("No active profile.")
+
+
+def cmd_activate(args):
+    activate_profile(args.name)
+
+
+def cmd_deactivate(args):
+    deactivate_profile()
+
+
+def cmd_remove(args):
+    remove_profile(args.name)
+
+
+def cmd_show(args):
+    show_profile(args.name)
+
+
+def cmd_import(args):
+    src = Path(args.file)
+    if not src.exists():
+        print(f"File not found: {src}", file=sys.stderr)
+        sys.exit(1)
+    data = json.loads(src.read_text())
+    name = args.name or data.get("name") or src.stem
+    save_profile(name, data)
+    if args.activate:
+        activate_profile(name)
+
+
+def cmd_export(args):
+    profile = load_profile(args.name)
+    if not profile:
+        print(f"Profile '{args.name}' not found.", file=sys.stderr)
+        sys.exit(1)
+    dst = Path(args.output) if args.output else PROFILE_DIR / f"{args.name}.json"
+    dst.write_text(json.dumps(profile, indent=2, ensure_ascii=False))
+    print(f"Exported to {dst}")
+
+
+def complete_profile_names():
+    profiles = list_profiles()
+    print(" ".join(profiles))
+
+
+def complete_profile_types():
+    print(" ".join(PROFILE_TYPES))
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        prog="claw-profile",
+        description="Manage Claude Code profiles.",
+    )
+    sub = parser.add_subparsers(dest="command", required=True)
+
+    # list
+    p_list = sub.add_parser("list", help="List available profiles")
+
+    # add
+    p_add = sub.add_parser("add", help="Add a new custom profile")
+    p_add.add_argument("name", help="Profile name")
+    p_add.add_argument("-t", "--type", choices=PROFILE_TYPES, default="general",
+                       help="Profile type (for auto-completion)")
+    p_add.add_argument("-d", "--description", default="", help="Profile description")
+    p_add.add_argument("-a", "--activate", action="store_true",
+                       help="Activate after creating")
+
+    # activate
+    p_act = sub.add_parser("activate", help="Activate a profile")
+    p_act.add_argument("name", help="Profile name")
+
+    # deactivate
+    p_deact = sub.add_parser("deactivate", help="Deactivate the current profile")
+
+    # remove
+    p_rm = sub.add_parser("remove", help="Remove a custom profile")
+    p_rm.add_argument("name", help="Profile name")
+
+    # show
+    p_show = sub.add_parser("show", help="Show profile contents")
+    p_show.add_argument("name", help="Profile name")
+
+    # import
+    p_imp = sub.add_parser("import", help="Import a profile from a JSON file")
+    p_imp.add_argument("file", help="Path to profile JSON file")
+    p_imp.add_argument("-n", "--name", help="Profile name (default: from file)")
+    p_imp.add_argument("-a", "--activate", action="store_true",
+                       help="Activate after importing")
+
+    # export
+    p_exp = sub.add_parser("export", help="Export a profile to a JSON file")
+    p_exp.add_argument("name", help="Profile name")
+    p_exp.add_argument("-o", "--output", help="Output file path")
+
+    # completion helpers (used by shell completion scripts)
+    p_comp_profiles = sub.add_parser("_complete_profiles", help=argparse.SUPPRESS)
+    p_comp_types = sub.add_parser("_complete_types", help=argparse.SUPPRESS)
+
+    args = parser.parse_args()
+
+    if args.command == "list":
+        cmd_list(args)
+    elif args.command == "add":
+        cmd_add(args)
+    elif args.command == "activate":
+        cmd_activate(args)
+    elif args.command == "deactivate":
+        cmd_deactivate(args)
+    elif args.command == "remove":
+        cmd_remove(args)
+    elif args.command == "show":
+        cmd_show(args)
+    elif args.command == "import":
+        cmd_import(args)
+    elif args.command == "export":
+        cmd_export(args)
+    elif args.command == "_complete_profiles":
+        complete_profile_names()
+    elif args.command == "_complete_types":
+        complete_profile_types()
+
+
+if __name__ == "__main__":
+    main()

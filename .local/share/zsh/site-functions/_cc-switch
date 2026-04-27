@@ -1,0 +1,3943 @@
+#compdef cc-switch
+
+autoload -U is-at-least
+
+_cc-switch() {
+    typeset -A opt_args
+    typeset -a _arguments_options
+    local ret=1
+
+    if is-at-least 5.2; then
+        _arguments_options=(-s -S -C)
+    else
+        _arguments_options=(-s -C)
+    fi
+
+    local context curcontext="$curcontext" state line
+    _arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+'-V[Print version]' \
+'--version[Print version]' \
+":: :_cc-switch_commands" \
+"*::: :->cc-switch" \
+&& ret=0
+    case $state in
+    (cc-switch)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-command-$line[1]:"
+        case $line[1] in
+            (provider)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_cc-switch__provider_commands" \
+"*::: :->provider" \
+&& ret=0
+
+    case $state in
+    (provider)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-provider-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(current)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(switch)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':id -- Provider ID to switch to:_default' \
+&& ret=0
+;;
+(add)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(edit)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':id -- Provider ID to edit:_default' \
+&& ret=0
+;;
+(delete)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':id -- Provider ID to delete:_default' \
+&& ret=0
+;;
+(duplicate)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':id -- Provider ID to duplicate:_default' \
+&& ret=0
+;;
+(speedtest)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':id -- Provider ID to test:_default' \
+&& ret=0
+;;
+(stream-check)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':id -- Provider ID to check:_default' \
+&& ret=0
+;;
+(fetch-models)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':id -- Provider ID to query:_default' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_cc-switch__provider__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-provider-help-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(current)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(switch)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(add)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(edit)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(delete)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(duplicate)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(speedtest)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(stream-check)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(fetch-models)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(mcp)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_cc-switch__mcp_commands" \
+"*::: :->mcp" \
+&& ret=0
+
+    case $state in
+    (mcp)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-mcp-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(add)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(edit)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':id -- Server ID to edit:_default' \
+&& ret=0
+;;
+(delete)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':id -- Server ID to delete:_default' \
+&& ret=0
+;;
+(enable)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':id -- Server ID to enable:_default' \
+&& ret=0
+;;
+(disable)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':id -- Server ID to disable:_default' \
+&& ret=0
+;;
+(validate)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':command -- Command to validate:_default' \
+&& ret=0
+;;
+(sync)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(import)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_cc-switch__mcp__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-mcp-help-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(add)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(edit)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(delete)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(enable)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(disable)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(validate)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(sync)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(import)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(prompts)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_cc-switch__prompts_commands" \
+"*::: :->prompts" \
+&& ret=0
+
+    case $state in
+    (prompts)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-prompts-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(current)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(activate)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':id -- Prompt preset ID:_default' \
+&& ret=0
+;;
+(deactivate)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(create)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(edit)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':id -- Prompt preset ID:_default' \
+&& ret=0
+;;
+(delete)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':id -- Prompt preset ID:_default' \
+&& ret=0
+;;
+(show)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':id -- Prompt preset ID:_default' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_cc-switch__prompts__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-prompts-help-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(current)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(activate)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(deactivate)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(create)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(edit)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(delete)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(show)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(skills)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_cc-switch__skills_commands" \
+"*::: :->skills" \
+&& ret=0
+
+    case $state in
+    (skills)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-skills-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(discover)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'::query -- Optional query filter (matches name/directory):_default' \
+&& ret=0
+;;
+(install)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':spec -- Skill directory name or full key (owner/name\:directory):_default' \
+&& ret=0
+;;
+(uninstall)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':spec -- Skill directory or id:_default' \
+&& ret=0
+;;
+(enable)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':spec -- Skill directory or id:_default' \
+&& ret=0
+;;
+(disable)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':spec -- Skill directory or id:_default' \
+&& ret=0
+;;
+(sync)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(scan-unmanaged)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(import-from-apps)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'*::directories -- One or more skill directories to import:_default' \
+&& ret=0
+;;
+(info)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':spec -- Skill directory or id:_default' \
+&& ret=0
+;;
+(sync-method)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+'::method -- Optional method to set (omit to show current):((auto\:"Auto choose\: prefer symlink, fallback to copy"
+symlink\:"Always use symlink"
+copy\:"Always use directory copy"))' \
+&& ret=0
+;;
+(repos)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_cc-switch__skills__repos_commands" \
+"*::: :->repos" \
+&& ret=0
+
+    case $state in
+    (repos)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-skills-repos-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(add)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':url -- Repository (GitHub URL or owner/name\[@branch\]):_default' \
+&& ret=0
+;;
+(remove)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':url -- Repository (GitHub URL or owner/name):_default' \
+&& ret=0
+;;
+(enable)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':url -- Repository (GitHub URL or owner/name):_default' \
+&& ret=0
+;;
+(disable)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':url -- Repository (GitHub URL or owner/name):_default' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_cc-switch__skills__repos__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-skills-repos-help-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(add)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(remove)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(enable)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(disable)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_cc-switch__skills__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-skills-help-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(discover)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(install)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(uninstall)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(enable)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(disable)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(sync)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(scan-unmanaged)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(import-from-apps)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(info)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(sync-method)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(repos)
+_arguments "${_arguments_options[@]}" : \
+":: :_cc-switch__skills__help__repos_commands" \
+"*::: :->repos" \
+&& ret=0
+
+    case $state in
+    (repos)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-skills-help-repos-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(add)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(remove)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(enable)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(disable)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(config)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_cc-switch__config_commands" \
+"*::: :->config" \
+&& ret=0
+
+    case $state in
+    (config)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-config-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(path)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(export)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':file -- Output file path:_files' \
+&& ret=0
+;;
+(import)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':file -- Input file path:_files' \
+&& ret=0
+;;
+(backup)
+_arguments "${_arguments_options[@]}" : \
+'--name=[Optional custom name for the backup]:NAME:_default' \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(restore)
+_arguments "${_arguments_options[@]}" : \
+'(--file)--backup=[Backup ID to restore (from list)]:BACKUP:_default' \
+'(--backup)--file=[External file path to restore from]:FILE:_files' \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(validate)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(reset)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(common)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_cc-switch__config__common_commands" \
+"*::: :->common" \
+&& ret=0
+
+    case $state in
+    (common)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-config-common-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+'(--file)--snippet=[Inline snippet text (Claude/Gemini/OpenCode\: JSON object; Codex\: TOML)]:SNIPPET:_default' \
+'(--snippet)--file=[Read snippet text from file using the selected app'\''s format rules]:FILE:_files' \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--apply[Compatibility flag; changes already try to refresh the current live config when applicable]' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+&& ret=0
+;;
+(clear)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--apply[Compatibility flag; clearing already tries to refresh the current live config when applicable]' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_cc-switch__config__common__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-config-common-help-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(clear)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(webdav)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_cc-switch__config__webdav_commands" \
+"*::: :->webdav" \
+&& ret=0
+
+    case $state in
+    (webdav)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-config-webdav-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+'--base-url=[]:BASE_URL:_default' \
+'--remote-root=[]:REMOTE_ROOT:_default' \
+'--profile=[]:PROFILE:_default' \
+'--username=[]:USERNAME:_default' \
+'--password=[]:PASSWORD:_default' \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'(--disable)--enable[]' \
+'(--enable)--disable[]' \
+'(--no-auto-sync)--auto-sync[]' \
+'(--auto-sync)--no-auto-sync[]' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(clear)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(jianguoyun)
+_arguments "${_arguments_options[@]}" : \
+'--username=[]:USERNAME:_default' \
+'--password=[]:PASSWORD:_default' \
+'--remote-root=[]:REMOTE_ROOT:_default' \
+'--profile=[]:PROFILE:_default' \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'(--no-auto-sync)--auto-sync[]' \
+'(--auto-sync)--no-auto-sync[]' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(check-connection)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(upload)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(download)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(migrate-v1-to-v2)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_cc-switch__config__webdav__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-config-webdav-help-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(clear)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(jianguoyun)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(check-connection)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(upload)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(download)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(migrate-v1-to-v2)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_cc-switch__config__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-config-help-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(path)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(export)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(import)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(backup)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(restore)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(validate)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(reset)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(common)
+_arguments "${_arguments_options[@]}" : \
+":: :_cc-switch__config__help__common_commands" \
+"*::: :->common" \
+&& ret=0
+
+    case $state in
+    (common)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-config-help-common-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(clear)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(webdav)
+_arguments "${_arguments_options[@]}" : \
+":: :_cc-switch__config__help__webdav_commands" \
+"*::: :->webdav" \
+&& ret=0
+
+    case $state in
+    (webdav)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-config-help-webdav-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(clear)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(jianguoyun)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(check-connection)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(upload)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(download)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(migrate-v1-to-v2)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(proxy)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_cc-switch__proxy_commands" \
+"*::: :->proxy" \
+&& ret=0
+
+    case $state in
+    (proxy)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-proxy-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(enable)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(disable)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(serve)
+_arguments "${_arguments_options[@]}" : \
+'--listen-address=[Override listen address for this run only]:LISTEN_ADDRESS:_default' \
+'--listen-port=[Override listen port for this run only]:LISTEN_PORT:_default' \
+'*--takeover=[Enable manual takeover for the given app while this foreground session is running]:TAKEOVERS:(claude codex gemini open-code open-claw)' \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_cc-switch__proxy__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-proxy-help-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(enable)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(disable)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(serve)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(start)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_cc-switch__start_commands" \
+"*::: :->start" \
+&& ret=0
+
+    case $state in
+    (start)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-start-command-$line[1]:"
+        case $line[1] in
+            (claude)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':selector -- Provider selector\: exact ID first, then exact Name:_default' \
+&& ret=0
+;;
+(codex)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':selector -- Provider selector\: exact ID first, then exact Name:_default' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_cc-switch__start__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-start-help-command-$line[1]:"
+        case $line[1] in
+            (claude)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(codex)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(env)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_cc-switch__env_commands" \
+"*::: :->env" \
+&& ret=0
+
+    case $state in
+    (env)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-env-command-$line[1]:"
+        case $line[1] in
+            (check)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(tools)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_cc-switch__env__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-env-help-command-$line[1]:"
+        case $line[1] in
+            (check)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(tools)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(update)
+_arguments "${_arguments_options[@]}" : \
+'--version=[Target version (example\: v4.6.2). Defaults to latest release]:VERSION:_default' \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(interactive)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(completions)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'--app=[Specify the application type]:APP:(claude codex gemini open-code open-claw)' \
+'-v[Enable verbose output]' \
+'--verbose[Enable verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':shell -- The shell to generate completions for:(bash elvish fish powershell zsh)' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_cc-switch__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-help-command-$line[1]:"
+        case $line[1] in
+            (provider)
+_arguments "${_arguments_options[@]}" : \
+":: :_cc-switch__help__provider_commands" \
+"*::: :->provider" \
+&& ret=0
+
+    case $state in
+    (provider)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-help-provider-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(current)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(switch)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(add)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(edit)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(delete)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(duplicate)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(speedtest)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(stream-check)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(fetch-models)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(mcp)
+_arguments "${_arguments_options[@]}" : \
+":: :_cc-switch__help__mcp_commands" \
+"*::: :->mcp" \
+&& ret=0
+
+    case $state in
+    (mcp)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-help-mcp-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(add)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(edit)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(delete)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(enable)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(disable)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(validate)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(sync)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(import)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(prompts)
+_arguments "${_arguments_options[@]}" : \
+":: :_cc-switch__help__prompts_commands" \
+"*::: :->prompts" \
+&& ret=0
+
+    case $state in
+    (prompts)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-help-prompts-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(current)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(activate)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(deactivate)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(create)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(edit)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(delete)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(show)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(skills)
+_arguments "${_arguments_options[@]}" : \
+":: :_cc-switch__help__skills_commands" \
+"*::: :->skills" \
+&& ret=0
+
+    case $state in
+    (skills)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-help-skills-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(discover)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(install)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(uninstall)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(enable)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(disable)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(sync)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(scan-unmanaged)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(import-from-apps)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(info)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(sync-method)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(repos)
+_arguments "${_arguments_options[@]}" : \
+":: :_cc-switch__help__skills__repos_commands" \
+"*::: :->repos" \
+&& ret=0
+
+    case $state in
+    (repos)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-help-skills-repos-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(add)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(remove)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(enable)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(disable)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(config)
+_arguments "${_arguments_options[@]}" : \
+":: :_cc-switch__help__config_commands" \
+"*::: :->config" \
+&& ret=0
+
+    case $state in
+    (config)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-help-config-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(path)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(export)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(import)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(backup)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(restore)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(validate)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(reset)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(common)
+_arguments "${_arguments_options[@]}" : \
+":: :_cc-switch__help__config__common_commands" \
+"*::: :->common" \
+&& ret=0
+
+    case $state in
+    (common)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-help-config-common-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(clear)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(webdav)
+_arguments "${_arguments_options[@]}" : \
+":: :_cc-switch__help__config__webdav_commands" \
+"*::: :->webdav" \
+&& ret=0
+
+    case $state in
+    (webdav)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-help-config-webdav-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(clear)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(jianguoyun)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(check-connection)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(upload)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(download)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(migrate-v1-to-v2)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(proxy)
+_arguments "${_arguments_options[@]}" : \
+":: :_cc-switch__help__proxy_commands" \
+"*::: :->proxy" \
+&& ret=0
+
+    case $state in
+    (proxy)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-help-proxy-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(enable)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(disable)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(serve)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(start)
+_arguments "${_arguments_options[@]}" : \
+":: :_cc-switch__help__start_commands" \
+"*::: :->start" \
+&& ret=0
+
+    case $state in
+    (start)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-help-start-command-$line[1]:"
+        case $line[1] in
+            (claude)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(codex)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(env)
+_arguments "${_arguments_options[@]}" : \
+":: :_cc-switch__help__env_commands" \
+"*::: :->env" \
+&& ret=0
+
+    case $state in
+    (env)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:cc-switch-help-env-command-$line[1]:"
+        case $line[1] in
+            (check)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(tools)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(update)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(interactive)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(completions)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+}
+
+(( $+functions[_cc-switch_commands] )) ||
+_cc-switch_commands() {
+    local commands; commands=(
+'provider:Manage providers (list, switch, speedtest, stream-check, fetch-models)' \
+'mcp:Manage MCP servers (list, add, edit, delete, sync)' \
+'prompts:Manage prompts (list, activate, edit)' \
+'skills:Manage skills and skill repositories' \
+'config:Manage configuration, backups, common snippets, and WebDAV sync' \
+'proxy:Manage local multi-app proxy' \
+'start:Start an app with a provider selector without switching the global current provider' \
+'env:Manage environment variables and local CLI tool checks' \
+'update:Update cc-switch binary to latest release' \
+'interactive:Enter interactive mode' \
+'completions:Generate shell completions' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'cc-switch commands' commands "$@"
+}
+(( $+functions[_cc-switch__completions_commands] )) ||
+_cc-switch__completions_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch completions commands' commands "$@"
+}
+(( $+functions[_cc-switch__config_commands] )) ||
+_cc-switch__config_commands() {
+    local commands; commands=(
+'show:Show current configuration' \
+'path:Show configuration file path' \
+'export:Export configuration to file' \
+'import:Import configuration from file' \
+'backup:Create a backup of current configuration' \
+'restore:Restore from a backup' \
+'validate:Validate configuration file' \
+'reset:Reset to default configuration' \
+'common:Manage common configuration snippet (per app)' \
+'webdav:Manage WebDAV sync settings and operations' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'cc-switch config commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__backup_commands] )) ||
+_cc-switch__config__backup_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config backup commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__common_commands] )) ||
+_cc-switch__config__common_commands() {
+    local commands; commands=(
+'show:Show current common config snippet' \
+'set:Set common config snippet for the selected app' \
+'clear:Clear common config snippet for the selected app' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'cc-switch config common commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__common__clear_commands] )) ||
+_cc-switch__config__common__clear_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config common clear commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__common__help_commands] )) ||
+_cc-switch__config__common__help_commands() {
+    local commands; commands=(
+'show:Show current common config snippet' \
+'set:Set common config snippet for the selected app' \
+'clear:Clear common config snippet for the selected app' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'cc-switch config common help commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__common__help__clear_commands] )) ||
+_cc-switch__config__common__help__clear_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config common help clear commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__common__help__help_commands] )) ||
+_cc-switch__config__common__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config common help help commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__common__help__set_commands] )) ||
+_cc-switch__config__common__help__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config common help set commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__common__help__show_commands] )) ||
+_cc-switch__config__common__help__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config common help show commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__common__set_commands] )) ||
+_cc-switch__config__common__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config common set commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__common__show_commands] )) ||
+_cc-switch__config__common__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config common show commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__export_commands] )) ||
+_cc-switch__config__export_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config export commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__help_commands] )) ||
+_cc-switch__config__help_commands() {
+    local commands; commands=(
+'show:Show current configuration' \
+'path:Show configuration file path' \
+'export:Export configuration to file' \
+'import:Import configuration from file' \
+'backup:Create a backup of current configuration' \
+'restore:Restore from a backup' \
+'validate:Validate configuration file' \
+'reset:Reset to default configuration' \
+'common:Manage common configuration snippet (per app)' \
+'webdav:Manage WebDAV sync settings and operations' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'cc-switch config help commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__help__backup_commands] )) ||
+_cc-switch__config__help__backup_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config help backup commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__help__common_commands] )) ||
+_cc-switch__config__help__common_commands() {
+    local commands; commands=(
+'show:Show current common config snippet' \
+'set:Set common config snippet for the selected app' \
+'clear:Clear common config snippet for the selected app' \
+    )
+    _describe -t commands 'cc-switch config help common commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__help__common__clear_commands] )) ||
+_cc-switch__config__help__common__clear_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config help common clear commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__help__common__set_commands] )) ||
+_cc-switch__config__help__common__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config help common set commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__help__common__show_commands] )) ||
+_cc-switch__config__help__common__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config help common show commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__help__export_commands] )) ||
+_cc-switch__config__help__export_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config help export commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__help__help_commands] )) ||
+_cc-switch__config__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config help help commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__help__import_commands] )) ||
+_cc-switch__config__help__import_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config help import commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__help__path_commands] )) ||
+_cc-switch__config__help__path_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config help path commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__help__reset_commands] )) ||
+_cc-switch__config__help__reset_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config help reset commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__help__restore_commands] )) ||
+_cc-switch__config__help__restore_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config help restore commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__help__show_commands] )) ||
+_cc-switch__config__help__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config help show commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__help__validate_commands] )) ||
+_cc-switch__config__help__validate_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config help validate commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__help__webdav_commands] )) ||
+_cc-switch__config__help__webdav_commands() {
+    local commands; commands=(
+'show:Show current WebDAV sync settings' \
+'set:Create or update WebDAV sync settings' \
+'clear:Clear stored WebDAV sync settings' \
+'jianguoyun:Apply Jianguoyun preset settings' \
+'check-connection:Check whether the current WebDAV settings can connect successfully' \
+'upload:Upload the current local snapshot to WebDAV' \
+'download:Download the current remote snapshot from WebDAV' \
+'migrate-v1-to-v2:Migrate legacy V1 remote data to V2 protocol' \
+    )
+    _describe -t commands 'cc-switch config help webdav commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__help__webdav__check-connection_commands] )) ||
+_cc-switch__config__help__webdav__check-connection_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config help webdav check-connection commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__help__webdav__clear_commands] )) ||
+_cc-switch__config__help__webdav__clear_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config help webdav clear commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__help__webdav__download_commands] )) ||
+_cc-switch__config__help__webdav__download_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config help webdav download commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__help__webdav__jianguoyun_commands] )) ||
+_cc-switch__config__help__webdav__jianguoyun_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config help webdav jianguoyun commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__help__webdav__migrate-v1-to-v2_commands] )) ||
+_cc-switch__config__help__webdav__migrate-v1-to-v2_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config help webdav migrate-v1-to-v2 commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__help__webdav__set_commands] )) ||
+_cc-switch__config__help__webdav__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config help webdav set commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__help__webdav__show_commands] )) ||
+_cc-switch__config__help__webdav__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config help webdav show commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__help__webdav__upload_commands] )) ||
+_cc-switch__config__help__webdav__upload_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config help webdav upload commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__import_commands] )) ||
+_cc-switch__config__import_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config import commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__path_commands] )) ||
+_cc-switch__config__path_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config path commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__reset_commands] )) ||
+_cc-switch__config__reset_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config reset commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__restore_commands] )) ||
+_cc-switch__config__restore_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config restore commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__show_commands] )) ||
+_cc-switch__config__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config show commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__validate_commands] )) ||
+_cc-switch__config__validate_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config validate commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__webdav_commands] )) ||
+_cc-switch__config__webdav_commands() {
+    local commands; commands=(
+'show:Show current WebDAV sync settings' \
+'set:Create or update WebDAV sync settings' \
+'clear:Clear stored WebDAV sync settings' \
+'jianguoyun:Apply Jianguoyun preset settings' \
+'check-connection:Check whether the current WebDAV settings can connect successfully' \
+'upload:Upload the current local snapshot to WebDAV' \
+'download:Download the current remote snapshot from WebDAV' \
+'migrate-v1-to-v2:Migrate legacy V1 remote data to V2 protocol' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'cc-switch config webdav commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__webdav__check-connection_commands] )) ||
+_cc-switch__config__webdav__check-connection_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config webdav check-connection commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__webdav__clear_commands] )) ||
+_cc-switch__config__webdav__clear_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config webdav clear commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__webdav__download_commands] )) ||
+_cc-switch__config__webdav__download_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config webdav download commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__webdav__help_commands] )) ||
+_cc-switch__config__webdav__help_commands() {
+    local commands; commands=(
+'show:Show current WebDAV sync settings' \
+'set:Create or update WebDAV sync settings' \
+'clear:Clear stored WebDAV sync settings' \
+'jianguoyun:Apply Jianguoyun preset settings' \
+'check-connection:Check whether the current WebDAV settings can connect successfully' \
+'upload:Upload the current local snapshot to WebDAV' \
+'download:Download the current remote snapshot from WebDAV' \
+'migrate-v1-to-v2:Migrate legacy V1 remote data to V2 protocol' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'cc-switch config webdav help commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__webdav__help__check-connection_commands] )) ||
+_cc-switch__config__webdav__help__check-connection_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config webdav help check-connection commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__webdav__help__clear_commands] )) ||
+_cc-switch__config__webdav__help__clear_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config webdav help clear commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__webdav__help__download_commands] )) ||
+_cc-switch__config__webdav__help__download_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config webdav help download commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__webdav__help__help_commands] )) ||
+_cc-switch__config__webdav__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config webdav help help commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__webdav__help__jianguoyun_commands] )) ||
+_cc-switch__config__webdav__help__jianguoyun_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config webdav help jianguoyun commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__webdav__help__migrate-v1-to-v2_commands] )) ||
+_cc-switch__config__webdav__help__migrate-v1-to-v2_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config webdav help migrate-v1-to-v2 commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__webdav__help__set_commands] )) ||
+_cc-switch__config__webdav__help__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config webdav help set commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__webdav__help__show_commands] )) ||
+_cc-switch__config__webdav__help__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config webdav help show commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__webdav__help__upload_commands] )) ||
+_cc-switch__config__webdav__help__upload_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config webdav help upload commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__webdav__jianguoyun_commands] )) ||
+_cc-switch__config__webdav__jianguoyun_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config webdav jianguoyun commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__webdav__migrate-v1-to-v2_commands] )) ||
+_cc-switch__config__webdav__migrate-v1-to-v2_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config webdav migrate-v1-to-v2 commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__webdav__set_commands] )) ||
+_cc-switch__config__webdav__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config webdav set commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__webdav__show_commands] )) ||
+_cc-switch__config__webdav__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config webdav show commands' commands "$@"
+}
+(( $+functions[_cc-switch__config__webdav__upload_commands] )) ||
+_cc-switch__config__webdav__upload_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch config webdav upload commands' commands "$@"
+}
+(( $+functions[_cc-switch__env_commands] )) ||
+_cc-switch__env_commands() {
+    local commands; commands=(
+'check:Check for environment variable conflicts' \
+'list:List all relevant environment variables' \
+'tools:Check whether Claude/Codex/Gemini/OpenCode CLIs are installed locally' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'cc-switch env commands' commands "$@"
+}
+(( $+functions[_cc-switch__env__check_commands] )) ||
+_cc-switch__env__check_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch env check commands' commands "$@"
+}
+(( $+functions[_cc-switch__env__help_commands] )) ||
+_cc-switch__env__help_commands() {
+    local commands; commands=(
+'check:Check for environment variable conflicts' \
+'list:List all relevant environment variables' \
+'tools:Check whether Claude/Codex/Gemini/OpenCode CLIs are installed locally' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'cc-switch env help commands' commands "$@"
+}
+(( $+functions[_cc-switch__env__help__check_commands] )) ||
+_cc-switch__env__help__check_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch env help check commands' commands "$@"
+}
+(( $+functions[_cc-switch__env__help__help_commands] )) ||
+_cc-switch__env__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch env help help commands' commands "$@"
+}
+(( $+functions[_cc-switch__env__help__list_commands] )) ||
+_cc-switch__env__help__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch env help list commands' commands "$@"
+}
+(( $+functions[_cc-switch__env__help__tools_commands] )) ||
+_cc-switch__env__help__tools_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch env help tools commands' commands "$@"
+}
+(( $+functions[_cc-switch__env__list_commands] )) ||
+_cc-switch__env__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch env list commands' commands "$@"
+}
+(( $+functions[_cc-switch__env__tools_commands] )) ||
+_cc-switch__env__tools_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch env tools commands' commands "$@"
+}
+(( $+functions[_cc-switch__help_commands] )) ||
+_cc-switch__help_commands() {
+    local commands; commands=(
+'provider:Manage providers (list, switch, speedtest, stream-check, fetch-models)' \
+'mcp:Manage MCP servers (list, add, edit, delete, sync)' \
+'prompts:Manage prompts (list, activate, edit)' \
+'skills:Manage skills and skill repositories' \
+'config:Manage configuration, backups, common snippets, and WebDAV sync' \
+'proxy:Manage local multi-app proxy' \
+'start:Start an app with a provider selector without switching the global current provider' \
+'env:Manage environment variables and local CLI tool checks' \
+'update:Update cc-switch binary to latest release' \
+'interactive:Enter interactive mode' \
+'completions:Generate shell completions' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'cc-switch help commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__completions_commands] )) ||
+_cc-switch__help__completions_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help completions commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__config_commands] )) ||
+_cc-switch__help__config_commands() {
+    local commands; commands=(
+'show:Show current configuration' \
+'path:Show configuration file path' \
+'export:Export configuration to file' \
+'import:Import configuration from file' \
+'backup:Create a backup of current configuration' \
+'restore:Restore from a backup' \
+'validate:Validate configuration file' \
+'reset:Reset to default configuration' \
+'common:Manage common configuration snippet (per app)' \
+'webdav:Manage WebDAV sync settings and operations' \
+    )
+    _describe -t commands 'cc-switch help config commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__config__backup_commands] )) ||
+_cc-switch__help__config__backup_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help config backup commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__config__common_commands] )) ||
+_cc-switch__help__config__common_commands() {
+    local commands; commands=(
+'show:Show current common config snippet' \
+'set:Set common config snippet for the selected app' \
+'clear:Clear common config snippet for the selected app' \
+    )
+    _describe -t commands 'cc-switch help config common commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__config__common__clear_commands] )) ||
+_cc-switch__help__config__common__clear_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help config common clear commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__config__common__set_commands] )) ||
+_cc-switch__help__config__common__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help config common set commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__config__common__show_commands] )) ||
+_cc-switch__help__config__common__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help config common show commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__config__export_commands] )) ||
+_cc-switch__help__config__export_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help config export commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__config__import_commands] )) ||
+_cc-switch__help__config__import_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help config import commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__config__path_commands] )) ||
+_cc-switch__help__config__path_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help config path commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__config__reset_commands] )) ||
+_cc-switch__help__config__reset_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help config reset commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__config__restore_commands] )) ||
+_cc-switch__help__config__restore_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help config restore commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__config__show_commands] )) ||
+_cc-switch__help__config__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help config show commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__config__validate_commands] )) ||
+_cc-switch__help__config__validate_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help config validate commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__config__webdav_commands] )) ||
+_cc-switch__help__config__webdav_commands() {
+    local commands; commands=(
+'show:Show current WebDAV sync settings' \
+'set:Create or update WebDAV sync settings' \
+'clear:Clear stored WebDAV sync settings' \
+'jianguoyun:Apply Jianguoyun preset settings' \
+'check-connection:Check whether the current WebDAV settings can connect successfully' \
+'upload:Upload the current local snapshot to WebDAV' \
+'download:Download the current remote snapshot from WebDAV' \
+'migrate-v1-to-v2:Migrate legacy V1 remote data to V2 protocol' \
+    )
+    _describe -t commands 'cc-switch help config webdav commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__config__webdav__check-connection_commands] )) ||
+_cc-switch__help__config__webdav__check-connection_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help config webdav check-connection commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__config__webdav__clear_commands] )) ||
+_cc-switch__help__config__webdav__clear_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help config webdav clear commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__config__webdav__download_commands] )) ||
+_cc-switch__help__config__webdav__download_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help config webdav download commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__config__webdav__jianguoyun_commands] )) ||
+_cc-switch__help__config__webdav__jianguoyun_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help config webdav jianguoyun commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__config__webdav__migrate-v1-to-v2_commands] )) ||
+_cc-switch__help__config__webdav__migrate-v1-to-v2_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help config webdav migrate-v1-to-v2 commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__config__webdav__set_commands] )) ||
+_cc-switch__help__config__webdav__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help config webdav set commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__config__webdav__show_commands] )) ||
+_cc-switch__help__config__webdav__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help config webdav show commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__config__webdav__upload_commands] )) ||
+_cc-switch__help__config__webdav__upload_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help config webdav upload commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__env_commands] )) ||
+_cc-switch__help__env_commands() {
+    local commands; commands=(
+'check:Check for environment variable conflicts' \
+'list:List all relevant environment variables' \
+'tools:Check whether Claude/Codex/Gemini/OpenCode CLIs are installed locally' \
+    )
+    _describe -t commands 'cc-switch help env commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__env__check_commands] )) ||
+_cc-switch__help__env__check_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help env check commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__env__list_commands] )) ||
+_cc-switch__help__env__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help env list commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__env__tools_commands] )) ||
+_cc-switch__help__env__tools_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help env tools commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__help_commands] )) ||
+_cc-switch__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help help commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__interactive_commands] )) ||
+_cc-switch__help__interactive_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help interactive commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__mcp_commands] )) ||
+_cc-switch__help__mcp_commands() {
+    local commands; commands=(
+'list:List all MCP servers' \
+'add:Add a new MCP server (interactive)' \
+'edit:Edit an MCP server' \
+'delete:Delete an MCP server' \
+'enable:Enable an MCP server for specific app(s)' \
+'disable:Disable an MCP server for specific app(s)' \
+'validate:Validate a command is in PATH' \
+'sync:Sync MCP configuration to live files' \
+'import:Import MCP servers from live configuration' \
+    )
+    _describe -t commands 'cc-switch help mcp commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__mcp__add_commands] )) ||
+_cc-switch__help__mcp__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help mcp add commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__mcp__delete_commands] )) ||
+_cc-switch__help__mcp__delete_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help mcp delete commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__mcp__disable_commands] )) ||
+_cc-switch__help__mcp__disable_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help mcp disable commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__mcp__edit_commands] )) ||
+_cc-switch__help__mcp__edit_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help mcp edit commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__mcp__enable_commands] )) ||
+_cc-switch__help__mcp__enable_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help mcp enable commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__mcp__import_commands] )) ||
+_cc-switch__help__mcp__import_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help mcp import commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__mcp__list_commands] )) ||
+_cc-switch__help__mcp__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help mcp list commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__mcp__sync_commands] )) ||
+_cc-switch__help__mcp__sync_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help mcp sync commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__mcp__validate_commands] )) ||
+_cc-switch__help__mcp__validate_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help mcp validate commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__prompts_commands] )) ||
+_cc-switch__help__prompts_commands() {
+    local commands; commands=(
+'list:List all prompt presets' \
+'current:Show current active prompt' \
+'activate:Activate a prompt preset' \
+'deactivate:Deactivate the current active prompt' \
+'create:Create a new prompt preset' \
+'edit:Edit a prompt preset' \
+'delete:Delete a prompt preset' \
+'show:Show prompt content' \
+    )
+    _describe -t commands 'cc-switch help prompts commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__prompts__activate_commands] )) ||
+_cc-switch__help__prompts__activate_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help prompts activate commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__prompts__create_commands] )) ||
+_cc-switch__help__prompts__create_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help prompts create commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__prompts__current_commands] )) ||
+_cc-switch__help__prompts__current_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help prompts current commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__prompts__deactivate_commands] )) ||
+_cc-switch__help__prompts__deactivate_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help prompts deactivate commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__prompts__delete_commands] )) ||
+_cc-switch__help__prompts__delete_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help prompts delete commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__prompts__edit_commands] )) ||
+_cc-switch__help__prompts__edit_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help prompts edit commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__prompts__list_commands] )) ||
+_cc-switch__help__prompts__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help prompts list commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__prompts__show_commands] )) ||
+_cc-switch__help__prompts__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help prompts show commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__provider_commands] )) ||
+_cc-switch__help__provider_commands() {
+    local commands; commands=(
+'list:List all providers' \
+'current:Show current provider' \
+'switch:Switch to a provider' \
+'add:Add a new provider (interactive)' \
+'edit:Edit a provider' \
+'delete:Delete a provider' \
+'duplicate:Duplicate a provider' \
+'speedtest:Test provider endpoint speed' \
+'stream-check:Run stream health check for a provider' \
+'fetch-models:Fetch remote model list for a provider' \
+    )
+    _describe -t commands 'cc-switch help provider commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__provider__add_commands] )) ||
+_cc-switch__help__provider__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help provider add commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__provider__current_commands] )) ||
+_cc-switch__help__provider__current_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help provider current commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__provider__delete_commands] )) ||
+_cc-switch__help__provider__delete_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help provider delete commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__provider__duplicate_commands] )) ||
+_cc-switch__help__provider__duplicate_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help provider duplicate commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__provider__edit_commands] )) ||
+_cc-switch__help__provider__edit_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help provider edit commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__provider__fetch-models_commands] )) ||
+_cc-switch__help__provider__fetch-models_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help provider fetch-models commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__provider__list_commands] )) ||
+_cc-switch__help__provider__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help provider list commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__provider__speedtest_commands] )) ||
+_cc-switch__help__provider__speedtest_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help provider speedtest commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__provider__stream-check_commands] )) ||
+_cc-switch__help__provider__stream-check_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help provider stream-check commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__provider__switch_commands] )) ||
+_cc-switch__help__provider__switch_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help provider switch commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__proxy_commands] )) ||
+_cc-switch__help__proxy_commands() {
+    local commands; commands=(
+'show:Show current proxy configuration and routes' \
+'enable:Enable the persisted proxy switch' \
+'disable:Disable the persisted proxy switch' \
+'serve:Start the local proxy in the foreground for debugging' \
+    )
+    _describe -t commands 'cc-switch help proxy commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__proxy__disable_commands] )) ||
+_cc-switch__help__proxy__disable_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help proxy disable commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__proxy__enable_commands] )) ||
+_cc-switch__help__proxy__enable_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help proxy enable commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__proxy__serve_commands] )) ||
+_cc-switch__help__proxy__serve_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help proxy serve commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__proxy__show_commands] )) ||
+_cc-switch__help__proxy__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help proxy show commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__skills_commands] )) ||
+_cc-switch__help__skills_commands() {
+    local commands; commands=(
+'list:List installed skills (from SSOT + database state)' \
+'discover:Discover available skills (from enabled repos)' \
+'install:Install a skill (SSOT -> app skills dir)' \
+'uninstall:Uninstall a skill (remove from SSOT and app dirs)' \
+'enable:Enable a skill for the selected app' \
+'disable:Disable a skill for the selected app' \
+'sync:Sync enabled skills to app skills dirs' \
+'scan-unmanaged:Scan unmanaged skills in app skills dirs' \
+'import-from-apps:Import unmanaged skills from app skills dirs into SSOT' \
+'info:Show skill information' \
+'sync-method:Get or set the skills sync method (auto|symlink|copy)' \
+'repos:Manage skill repositories' \
+    )
+    _describe -t commands 'cc-switch help skills commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__skills__disable_commands] )) ||
+_cc-switch__help__skills__disable_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help skills disable commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__skills__discover_commands] )) ||
+_cc-switch__help__skills__discover_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help skills discover commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__skills__enable_commands] )) ||
+_cc-switch__help__skills__enable_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help skills enable commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__skills__import-from-apps_commands] )) ||
+_cc-switch__help__skills__import-from-apps_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help skills import-from-apps commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__skills__info_commands] )) ||
+_cc-switch__help__skills__info_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help skills info commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__skills__install_commands] )) ||
+_cc-switch__help__skills__install_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help skills install commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__skills__list_commands] )) ||
+_cc-switch__help__skills__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help skills list commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__skills__repos_commands] )) ||
+_cc-switch__help__skills__repos_commands() {
+    local commands; commands=(
+'list:List all repositories' \
+'add:Add a repository' \
+'remove:Remove a repository' \
+'enable:Enable a repository without changing its branch' \
+'disable:Disable a repository without changing its branch' \
+    )
+    _describe -t commands 'cc-switch help skills repos commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__skills__repos__add_commands] )) ||
+_cc-switch__help__skills__repos__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help skills repos add commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__skills__repos__disable_commands] )) ||
+_cc-switch__help__skills__repos__disable_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help skills repos disable commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__skills__repos__enable_commands] )) ||
+_cc-switch__help__skills__repos__enable_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help skills repos enable commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__skills__repos__list_commands] )) ||
+_cc-switch__help__skills__repos__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help skills repos list commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__skills__repos__remove_commands] )) ||
+_cc-switch__help__skills__repos__remove_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help skills repos remove commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__skills__scan-unmanaged_commands] )) ||
+_cc-switch__help__skills__scan-unmanaged_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help skills scan-unmanaged commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__skills__sync_commands] )) ||
+_cc-switch__help__skills__sync_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help skills sync commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__skills__sync-method_commands] )) ||
+_cc-switch__help__skills__sync-method_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help skills sync-method commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__skills__uninstall_commands] )) ||
+_cc-switch__help__skills__uninstall_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help skills uninstall commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__start_commands] )) ||
+_cc-switch__help__start_commands() {
+    local commands; commands=(
+'claude:Start Claude with a provider selector without switching the global current provider' \
+'codex:Start Codex with a provider selector without switching the global current provider' \
+    )
+    _describe -t commands 'cc-switch help start commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__start__claude_commands] )) ||
+_cc-switch__help__start__claude_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help start claude commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__start__codex_commands] )) ||
+_cc-switch__help__start__codex_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help start codex commands' commands "$@"
+}
+(( $+functions[_cc-switch__help__update_commands] )) ||
+_cc-switch__help__update_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch help update commands' commands "$@"
+}
+(( $+functions[_cc-switch__interactive_commands] )) ||
+_cc-switch__interactive_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch interactive commands' commands "$@"
+}
+(( $+functions[_cc-switch__mcp_commands] )) ||
+_cc-switch__mcp_commands() {
+    local commands; commands=(
+'list:List all MCP servers' \
+'add:Add a new MCP server (interactive)' \
+'edit:Edit an MCP server' \
+'delete:Delete an MCP server' \
+'enable:Enable an MCP server for specific app(s)' \
+'disable:Disable an MCP server for specific app(s)' \
+'validate:Validate a command is in PATH' \
+'sync:Sync MCP configuration to live files' \
+'import:Import MCP servers from live configuration' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'cc-switch mcp commands' commands "$@"
+}
+(( $+functions[_cc-switch__mcp__add_commands] )) ||
+_cc-switch__mcp__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch mcp add commands' commands "$@"
+}
+(( $+functions[_cc-switch__mcp__delete_commands] )) ||
+_cc-switch__mcp__delete_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch mcp delete commands' commands "$@"
+}
+(( $+functions[_cc-switch__mcp__disable_commands] )) ||
+_cc-switch__mcp__disable_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch mcp disable commands' commands "$@"
+}
+(( $+functions[_cc-switch__mcp__edit_commands] )) ||
+_cc-switch__mcp__edit_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch mcp edit commands' commands "$@"
+}
+(( $+functions[_cc-switch__mcp__enable_commands] )) ||
+_cc-switch__mcp__enable_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch mcp enable commands' commands "$@"
+}
+(( $+functions[_cc-switch__mcp__help_commands] )) ||
+_cc-switch__mcp__help_commands() {
+    local commands; commands=(
+'list:List all MCP servers' \
+'add:Add a new MCP server (interactive)' \
+'edit:Edit an MCP server' \
+'delete:Delete an MCP server' \
+'enable:Enable an MCP server for specific app(s)' \
+'disable:Disable an MCP server for specific app(s)' \
+'validate:Validate a command is in PATH' \
+'sync:Sync MCP configuration to live files' \
+'import:Import MCP servers from live configuration' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'cc-switch mcp help commands' commands "$@"
+}
+(( $+functions[_cc-switch__mcp__help__add_commands] )) ||
+_cc-switch__mcp__help__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch mcp help add commands' commands "$@"
+}
+(( $+functions[_cc-switch__mcp__help__delete_commands] )) ||
+_cc-switch__mcp__help__delete_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch mcp help delete commands' commands "$@"
+}
+(( $+functions[_cc-switch__mcp__help__disable_commands] )) ||
+_cc-switch__mcp__help__disable_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch mcp help disable commands' commands "$@"
+}
+(( $+functions[_cc-switch__mcp__help__edit_commands] )) ||
+_cc-switch__mcp__help__edit_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch mcp help edit commands' commands "$@"
+}
+(( $+functions[_cc-switch__mcp__help__enable_commands] )) ||
+_cc-switch__mcp__help__enable_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch mcp help enable commands' commands "$@"
+}
+(( $+functions[_cc-switch__mcp__help__help_commands] )) ||
+_cc-switch__mcp__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch mcp help help commands' commands "$@"
+}
+(( $+functions[_cc-switch__mcp__help__import_commands] )) ||
+_cc-switch__mcp__help__import_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch mcp help import commands' commands "$@"
+}
+(( $+functions[_cc-switch__mcp__help__list_commands] )) ||
+_cc-switch__mcp__help__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch mcp help list commands' commands "$@"
+}
+(( $+functions[_cc-switch__mcp__help__sync_commands] )) ||
+_cc-switch__mcp__help__sync_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch mcp help sync commands' commands "$@"
+}
+(( $+functions[_cc-switch__mcp__help__validate_commands] )) ||
+_cc-switch__mcp__help__validate_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch mcp help validate commands' commands "$@"
+}
+(( $+functions[_cc-switch__mcp__import_commands] )) ||
+_cc-switch__mcp__import_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch mcp import commands' commands "$@"
+}
+(( $+functions[_cc-switch__mcp__list_commands] )) ||
+_cc-switch__mcp__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch mcp list commands' commands "$@"
+}
+(( $+functions[_cc-switch__mcp__sync_commands] )) ||
+_cc-switch__mcp__sync_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch mcp sync commands' commands "$@"
+}
+(( $+functions[_cc-switch__mcp__validate_commands] )) ||
+_cc-switch__mcp__validate_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch mcp validate commands' commands "$@"
+}
+(( $+functions[_cc-switch__prompts_commands] )) ||
+_cc-switch__prompts_commands() {
+    local commands; commands=(
+'list:List all prompt presets' \
+'current:Show current active prompt' \
+'activate:Activate a prompt preset' \
+'deactivate:Deactivate the current active prompt' \
+'create:Create a new prompt preset' \
+'edit:Edit a prompt preset' \
+'delete:Delete a prompt preset' \
+'show:Show prompt content' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'cc-switch prompts commands' commands "$@"
+}
+(( $+functions[_cc-switch__prompts__activate_commands] )) ||
+_cc-switch__prompts__activate_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch prompts activate commands' commands "$@"
+}
+(( $+functions[_cc-switch__prompts__create_commands] )) ||
+_cc-switch__prompts__create_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch prompts create commands' commands "$@"
+}
+(( $+functions[_cc-switch__prompts__current_commands] )) ||
+_cc-switch__prompts__current_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch prompts current commands' commands "$@"
+}
+(( $+functions[_cc-switch__prompts__deactivate_commands] )) ||
+_cc-switch__prompts__deactivate_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch prompts deactivate commands' commands "$@"
+}
+(( $+functions[_cc-switch__prompts__delete_commands] )) ||
+_cc-switch__prompts__delete_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch prompts delete commands' commands "$@"
+}
+(( $+functions[_cc-switch__prompts__edit_commands] )) ||
+_cc-switch__prompts__edit_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch prompts edit commands' commands "$@"
+}
+(( $+functions[_cc-switch__prompts__help_commands] )) ||
+_cc-switch__prompts__help_commands() {
+    local commands; commands=(
+'list:List all prompt presets' \
+'current:Show current active prompt' \
+'activate:Activate a prompt preset' \
+'deactivate:Deactivate the current active prompt' \
+'create:Create a new prompt preset' \
+'edit:Edit a prompt preset' \
+'delete:Delete a prompt preset' \
+'show:Show prompt content' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'cc-switch prompts help commands' commands "$@"
+}
+(( $+functions[_cc-switch__prompts__help__activate_commands] )) ||
+_cc-switch__prompts__help__activate_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch prompts help activate commands' commands "$@"
+}
+(( $+functions[_cc-switch__prompts__help__create_commands] )) ||
+_cc-switch__prompts__help__create_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch prompts help create commands' commands "$@"
+}
+(( $+functions[_cc-switch__prompts__help__current_commands] )) ||
+_cc-switch__prompts__help__current_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch prompts help current commands' commands "$@"
+}
+(( $+functions[_cc-switch__prompts__help__deactivate_commands] )) ||
+_cc-switch__prompts__help__deactivate_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch prompts help deactivate commands' commands "$@"
+}
+(( $+functions[_cc-switch__prompts__help__delete_commands] )) ||
+_cc-switch__prompts__help__delete_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch prompts help delete commands' commands "$@"
+}
+(( $+functions[_cc-switch__prompts__help__edit_commands] )) ||
+_cc-switch__prompts__help__edit_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch prompts help edit commands' commands "$@"
+}
+(( $+functions[_cc-switch__prompts__help__help_commands] )) ||
+_cc-switch__prompts__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch prompts help help commands' commands "$@"
+}
+(( $+functions[_cc-switch__prompts__help__list_commands] )) ||
+_cc-switch__prompts__help__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch prompts help list commands' commands "$@"
+}
+(( $+functions[_cc-switch__prompts__help__show_commands] )) ||
+_cc-switch__prompts__help__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch prompts help show commands' commands "$@"
+}
+(( $+functions[_cc-switch__prompts__list_commands] )) ||
+_cc-switch__prompts__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch prompts list commands' commands "$@"
+}
+(( $+functions[_cc-switch__prompts__show_commands] )) ||
+_cc-switch__prompts__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch prompts show commands' commands "$@"
+}
+(( $+functions[_cc-switch__provider_commands] )) ||
+_cc-switch__provider_commands() {
+    local commands; commands=(
+'list:List all providers' \
+'current:Show current provider' \
+'switch:Switch to a provider' \
+'add:Add a new provider (interactive)' \
+'edit:Edit a provider' \
+'delete:Delete a provider' \
+'duplicate:Duplicate a provider' \
+'speedtest:Test provider endpoint speed' \
+'stream-check:Run stream health check for a provider' \
+'fetch-models:Fetch remote model list for a provider' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'cc-switch provider commands' commands "$@"
+}
+(( $+functions[_cc-switch__provider__add_commands] )) ||
+_cc-switch__provider__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch provider add commands' commands "$@"
+}
+(( $+functions[_cc-switch__provider__current_commands] )) ||
+_cc-switch__provider__current_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch provider current commands' commands "$@"
+}
+(( $+functions[_cc-switch__provider__delete_commands] )) ||
+_cc-switch__provider__delete_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch provider delete commands' commands "$@"
+}
+(( $+functions[_cc-switch__provider__duplicate_commands] )) ||
+_cc-switch__provider__duplicate_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch provider duplicate commands' commands "$@"
+}
+(( $+functions[_cc-switch__provider__edit_commands] )) ||
+_cc-switch__provider__edit_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch provider edit commands' commands "$@"
+}
+(( $+functions[_cc-switch__provider__fetch-models_commands] )) ||
+_cc-switch__provider__fetch-models_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch provider fetch-models commands' commands "$@"
+}
+(( $+functions[_cc-switch__provider__help_commands] )) ||
+_cc-switch__provider__help_commands() {
+    local commands; commands=(
+'list:List all providers' \
+'current:Show current provider' \
+'switch:Switch to a provider' \
+'add:Add a new provider (interactive)' \
+'edit:Edit a provider' \
+'delete:Delete a provider' \
+'duplicate:Duplicate a provider' \
+'speedtest:Test provider endpoint speed' \
+'stream-check:Run stream health check for a provider' \
+'fetch-models:Fetch remote model list for a provider' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'cc-switch provider help commands' commands "$@"
+}
+(( $+functions[_cc-switch__provider__help__add_commands] )) ||
+_cc-switch__provider__help__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch provider help add commands' commands "$@"
+}
+(( $+functions[_cc-switch__provider__help__current_commands] )) ||
+_cc-switch__provider__help__current_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch provider help current commands' commands "$@"
+}
+(( $+functions[_cc-switch__provider__help__delete_commands] )) ||
+_cc-switch__provider__help__delete_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch provider help delete commands' commands "$@"
+}
+(( $+functions[_cc-switch__provider__help__duplicate_commands] )) ||
+_cc-switch__provider__help__duplicate_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch provider help duplicate commands' commands "$@"
+}
+(( $+functions[_cc-switch__provider__help__edit_commands] )) ||
+_cc-switch__provider__help__edit_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch provider help edit commands' commands "$@"
+}
+(( $+functions[_cc-switch__provider__help__fetch-models_commands] )) ||
+_cc-switch__provider__help__fetch-models_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch provider help fetch-models commands' commands "$@"
+}
+(( $+functions[_cc-switch__provider__help__help_commands] )) ||
+_cc-switch__provider__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch provider help help commands' commands "$@"
+}
+(( $+functions[_cc-switch__provider__help__list_commands] )) ||
+_cc-switch__provider__help__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch provider help list commands' commands "$@"
+}
+(( $+functions[_cc-switch__provider__help__speedtest_commands] )) ||
+_cc-switch__provider__help__speedtest_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch provider help speedtest commands' commands "$@"
+}
+(( $+functions[_cc-switch__provider__help__stream-check_commands] )) ||
+_cc-switch__provider__help__stream-check_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch provider help stream-check commands' commands "$@"
+}
+(( $+functions[_cc-switch__provider__help__switch_commands] )) ||
+_cc-switch__provider__help__switch_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch provider help switch commands' commands "$@"
+}
+(( $+functions[_cc-switch__provider__list_commands] )) ||
+_cc-switch__provider__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch provider list commands' commands "$@"
+}
+(( $+functions[_cc-switch__provider__speedtest_commands] )) ||
+_cc-switch__provider__speedtest_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch provider speedtest commands' commands "$@"
+}
+(( $+functions[_cc-switch__provider__stream-check_commands] )) ||
+_cc-switch__provider__stream-check_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch provider stream-check commands' commands "$@"
+}
+(( $+functions[_cc-switch__provider__switch_commands] )) ||
+_cc-switch__provider__switch_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch provider switch commands' commands "$@"
+}
+(( $+functions[_cc-switch__proxy_commands] )) ||
+_cc-switch__proxy_commands() {
+    local commands; commands=(
+'show:Show current proxy configuration and routes' \
+'enable:Enable the persisted proxy switch' \
+'disable:Disable the persisted proxy switch' \
+'serve:Start the local proxy in the foreground for debugging' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'cc-switch proxy commands' commands "$@"
+}
+(( $+functions[_cc-switch__proxy__disable_commands] )) ||
+_cc-switch__proxy__disable_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch proxy disable commands' commands "$@"
+}
+(( $+functions[_cc-switch__proxy__enable_commands] )) ||
+_cc-switch__proxy__enable_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch proxy enable commands' commands "$@"
+}
+(( $+functions[_cc-switch__proxy__help_commands] )) ||
+_cc-switch__proxy__help_commands() {
+    local commands; commands=(
+'show:Show current proxy configuration and routes' \
+'enable:Enable the persisted proxy switch' \
+'disable:Disable the persisted proxy switch' \
+'serve:Start the local proxy in the foreground for debugging' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'cc-switch proxy help commands' commands "$@"
+}
+(( $+functions[_cc-switch__proxy__help__disable_commands] )) ||
+_cc-switch__proxy__help__disable_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch proxy help disable commands' commands "$@"
+}
+(( $+functions[_cc-switch__proxy__help__enable_commands] )) ||
+_cc-switch__proxy__help__enable_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch proxy help enable commands' commands "$@"
+}
+(( $+functions[_cc-switch__proxy__help__help_commands] )) ||
+_cc-switch__proxy__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch proxy help help commands' commands "$@"
+}
+(( $+functions[_cc-switch__proxy__help__serve_commands] )) ||
+_cc-switch__proxy__help__serve_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch proxy help serve commands' commands "$@"
+}
+(( $+functions[_cc-switch__proxy__help__show_commands] )) ||
+_cc-switch__proxy__help__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch proxy help show commands' commands "$@"
+}
+(( $+functions[_cc-switch__proxy__serve_commands] )) ||
+_cc-switch__proxy__serve_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch proxy serve commands' commands "$@"
+}
+(( $+functions[_cc-switch__proxy__show_commands] )) ||
+_cc-switch__proxy__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch proxy show commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills_commands] )) ||
+_cc-switch__skills_commands() {
+    local commands; commands=(
+'list:List installed skills (from SSOT + database state)' \
+'discover:Discover available skills (from enabled repos)' \
+'install:Install a skill (SSOT -> app skills dir)' \
+'uninstall:Uninstall a skill (remove from SSOT and app dirs)' \
+'enable:Enable a skill for the selected app' \
+'disable:Disable a skill for the selected app' \
+'sync:Sync enabled skills to app skills dirs' \
+'scan-unmanaged:Scan unmanaged skills in app skills dirs' \
+'import-from-apps:Import unmanaged skills from app skills dirs into SSOT' \
+'info:Show skill information' \
+'sync-method:Get or set the skills sync method (auto|symlink|copy)' \
+'repos:Manage skill repositories' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'cc-switch skills commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__disable_commands] )) ||
+_cc-switch__skills__disable_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills disable commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__discover_commands] )) ||
+_cc-switch__skills__discover_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills discover commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__enable_commands] )) ||
+_cc-switch__skills__enable_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills enable commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__help_commands] )) ||
+_cc-switch__skills__help_commands() {
+    local commands; commands=(
+'list:List installed skills (from SSOT + database state)' \
+'discover:Discover available skills (from enabled repos)' \
+'install:Install a skill (SSOT -> app skills dir)' \
+'uninstall:Uninstall a skill (remove from SSOT and app dirs)' \
+'enable:Enable a skill for the selected app' \
+'disable:Disable a skill for the selected app' \
+'sync:Sync enabled skills to app skills dirs' \
+'scan-unmanaged:Scan unmanaged skills in app skills dirs' \
+'import-from-apps:Import unmanaged skills from app skills dirs into SSOT' \
+'info:Show skill information' \
+'sync-method:Get or set the skills sync method (auto|symlink|copy)' \
+'repos:Manage skill repositories' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'cc-switch skills help commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__help__disable_commands] )) ||
+_cc-switch__skills__help__disable_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills help disable commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__help__discover_commands] )) ||
+_cc-switch__skills__help__discover_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills help discover commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__help__enable_commands] )) ||
+_cc-switch__skills__help__enable_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills help enable commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__help__help_commands] )) ||
+_cc-switch__skills__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills help help commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__help__import-from-apps_commands] )) ||
+_cc-switch__skills__help__import-from-apps_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills help import-from-apps commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__help__info_commands] )) ||
+_cc-switch__skills__help__info_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills help info commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__help__install_commands] )) ||
+_cc-switch__skills__help__install_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills help install commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__help__list_commands] )) ||
+_cc-switch__skills__help__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills help list commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__help__repos_commands] )) ||
+_cc-switch__skills__help__repos_commands() {
+    local commands; commands=(
+'list:List all repositories' \
+'add:Add a repository' \
+'remove:Remove a repository' \
+'enable:Enable a repository without changing its branch' \
+'disable:Disable a repository without changing its branch' \
+    )
+    _describe -t commands 'cc-switch skills help repos commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__help__repos__add_commands] )) ||
+_cc-switch__skills__help__repos__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills help repos add commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__help__repos__disable_commands] )) ||
+_cc-switch__skills__help__repos__disable_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills help repos disable commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__help__repos__enable_commands] )) ||
+_cc-switch__skills__help__repos__enable_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills help repos enable commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__help__repos__list_commands] )) ||
+_cc-switch__skills__help__repos__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills help repos list commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__help__repos__remove_commands] )) ||
+_cc-switch__skills__help__repos__remove_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills help repos remove commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__help__scan-unmanaged_commands] )) ||
+_cc-switch__skills__help__scan-unmanaged_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills help scan-unmanaged commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__help__sync_commands] )) ||
+_cc-switch__skills__help__sync_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills help sync commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__help__sync-method_commands] )) ||
+_cc-switch__skills__help__sync-method_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills help sync-method commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__help__uninstall_commands] )) ||
+_cc-switch__skills__help__uninstall_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills help uninstall commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__import-from-apps_commands] )) ||
+_cc-switch__skills__import-from-apps_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills import-from-apps commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__info_commands] )) ||
+_cc-switch__skills__info_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills info commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__install_commands] )) ||
+_cc-switch__skills__install_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills install commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__list_commands] )) ||
+_cc-switch__skills__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills list commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__repos_commands] )) ||
+_cc-switch__skills__repos_commands() {
+    local commands; commands=(
+'list:List all repositories' \
+'add:Add a repository' \
+'remove:Remove a repository' \
+'enable:Enable a repository without changing its branch' \
+'disable:Disable a repository without changing its branch' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'cc-switch skills repos commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__repos__add_commands] )) ||
+_cc-switch__skills__repos__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills repos add commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__repos__disable_commands] )) ||
+_cc-switch__skills__repos__disable_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills repos disable commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__repos__enable_commands] )) ||
+_cc-switch__skills__repos__enable_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills repos enable commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__repos__help_commands] )) ||
+_cc-switch__skills__repos__help_commands() {
+    local commands; commands=(
+'list:List all repositories' \
+'add:Add a repository' \
+'remove:Remove a repository' \
+'enable:Enable a repository without changing its branch' \
+'disable:Disable a repository without changing its branch' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'cc-switch skills repos help commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__repos__help__add_commands] )) ||
+_cc-switch__skills__repos__help__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills repos help add commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__repos__help__disable_commands] )) ||
+_cc-switch__skills__repos__help__disable_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills repos help disable commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__repos__help__enable_commands] )) ||
+_cc-switch__skills__repos__help__enable_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills repos help enable commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__repos__help__help_commands] )) ||
+_cc-switch__skills__repos__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills repos help help commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__repos__help__list_commands] )) ||
+_cc-switch__skills__repos__help__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills repos help list commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__repos__help__remove_commands] )) ||
+_cc-switch__skills__repos__help__remove_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills repos help remove commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__repos__list_commands] )) ||
+_cc-switch__skills__repos__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills repos list commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__repos__remove_commands] )) ||
+_cc-switch__skills__repos__remove_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills repos remove commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__scan-unmanaged_commands] )) ||
+_cc-switch__skills__scan-unmanaged_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills scan-unmanaged commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__sync_commands] )) ||
+_cc-switch__skills__sync_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills sync commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__sync-method_commands] )) ||
+_cc-switch__skills__sync-method_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills sync-method commands' commands "$@"
+}
+(( $+functions[_cc-switch__skills__uninstall_commands] )) ||
+_cc-switch__skills__uninstall_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch skills uninstall commands' commands "$@"
+}
+(( $+functions[_cc-switch__start_commands] )) ||
+_cc-switch__start_commands() {
+    local commands; commands=(
+'claude:Start Claude with a provider selector without switching the global current provider' \
+'codex:Start Codex with a provider selector without switching the global current provider' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'cc-switch start commands' commands "$@"
+}
+(( $+functions[_cc-switch__start__claude_commands] )) ||
+_cc-switch__start__claude_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch start claude commands' commands "$@"
+}
+(( $+functions[_cc-switch__start__codex_commands] )) ||
+_cc-switch__start__codex_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch start codex commands' commands "$@"
+}
+(( $+functions[_cc-switch__start__help_commands] )) ||
+_cc-switch__start__help_commands() {
+    local commands; commands=(
+'claude:Start Claude with a provider selector without switching the global current provider' \
+'codex:Start Codex with a provider selector without switching the global current provider' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'cc-switch start help commands' commands "$@"
+}
+(( $+functions[_cc-switch__start__help__claude_commands] )) ||
+_cc-switch__start__help__claude_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch start help claude commands' commands "$@"
+}
+(( $+functions[_cc-switch__start__help__codex_commands] )) ||
+_cc-switch__start__help__codex_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch start help codex commands' commands "$@"
+}
+(( $+functions[_cc-switch__start__help__help_commands] )) ||
+_cc-switch__start__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch start help help commands' commands "$@"
+}
+(( $+functions[_cc-switch__update_commands] )) ||
+_cc-switch__update_commands() {
+    local commands; commands=()
+    _describe -t commands 'cc-switch update commands' commands "$@"
+}
+
+if [ "$funcstack[1]" = "_cc-switch" ]; then
+    _cc-switch "$@"
+else
+    compdef _cc-switch cc-switch
+fi
