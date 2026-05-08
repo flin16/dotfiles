@@ -1,0 +1,118 @@
+#!/usr/bin/env python3
+"""AC Power Watcher — 检测外接电源状态并上报到 ActivityWatch"""
+
+import subprocess
+import time
+import signal
+import logging
+from datetime import datetime, timezone
+
+import requests
+import urllib3
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+AW_URL = "https://aw.lan/api/0"
+BUCKET_ID = "ac-power-watcher"
+POLL_INTERVAL = 10       # 本地检测间隔（秒）
+HEARTBEAT_INTERVAL = 60  # 上报间隔（秒），证明进程还活着
+
+running = True
+
+
+def get_power_status() -> str | None:
+    try:
+        result = subprocess.run(
+            ["pmset", "-g", "ps"],
+            capture_output=True, text=True, timeout=5,
+        )
+        return result.stdout.strip()
+    except (subprocess.SubprocessError, FileNotFoundError) as e:
+        logging.error("pmset 调用失败: %s", e)
+        return None
+
+
+def parse_power_status(raw: str) -> tuple[str, str] | None:
+    if "AC Power" in raw:
+        return ("plugged", "AC Power")
+    elif "Battery Power" in raw:
+        return ("unplugged", "Battery Power")
+    return None
+
+
+def report_event(status: str, power_source: str) -> bool:
+    try:
+        resp = requests.post(
+            f"{AW_URL}/buckets/{BUCKET_ID}/events",
+            json=[{
+                "timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S") + "Z",
+                "duration": HEARTBEAT_INTERVAL,
+                "data": {
+                    "status": status,
+                    "power_source": power_source,
+                },
+            }],
+            verify=False, timeout=5,
+        )
+        return resp.status_code == 200
+    except requests.RequestException as e:
+        logging.warning("上报失败: %s", e)
+        return False
+
+
+def shutdown(signum, frame):
+    global running
+    logging.info("收到信号 %s, 准备退出", signum)
+    running = False
+
+
+def main():
+    signal.signal(signal.SIGINT, shutdown)
+    signal.signal(signal.SIGTERM, shutdown)
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(message)s",
+        datefmt="%H:%M:%S",
+    )
+
+    last_status = None
+    last_report = 0.0
+
+    logging.info("AC Power Watcher 启动")
+    logging.info("目标: %s, bucket: %s, 上报间隔: %ds", AW_URL, BUCKET_ID, HEARTBEAT_INTERVAL)
+
+    while running:
+        raw = get_power_status()
+        if raw is None:
+            time.sleep(POLL_INTERVAL)
+            continue
+
+        parsed = parse_power_status(raw)
+        if parsed is None:
+            logging.warning("无法解析电源状态: %s", raw[:80])
+            time.sleep(POLL_INTERVAL)
+            continue
+
+        status, power_source = parsed
+        now = time.time()
+
+        # 状态变化时立即上报
+        # 或定期上报证明进程存活
+        if status != last_status or (now - last_report >= HEARTBEAT_INTERVAL):
+            ok = report_event(status, power_source)
+            if ok:
+                if status != last_status:
+                    logging.info("状态变更: %s → %s", last_status, status)
+                last_status = status
+                last_report = now
+            else:
+                logging.warning("上报失败，下次重试")
+
+        time.sleep(POLL_INTERVAL)
+
+    logging.info("AC Power Watcher 已退出")
+
+
+if __name__ == "__main__":
+    main()
