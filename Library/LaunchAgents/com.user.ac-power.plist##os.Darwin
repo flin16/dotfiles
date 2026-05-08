@@ -7,7 +7,12 @@
     <string>com.user.ac-power</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/usr/local/bin/python3</string>
+        <string>/opt/homebrew/bin/uv</string>
+        <string>run</string>
+        <string>--with</string>
+        <string>requests</string>
+        <string>--python</string>
+        <string>3.11</string>
         <string>/Users/lfy/bin/ac-power.py</string>
     </array>
     <key>RunAtLoad</key>
