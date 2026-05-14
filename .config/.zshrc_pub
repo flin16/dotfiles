@@ -1,5 +1,4 @@
 export PATH="$PATH:$HOME/go/bin:$HOME/bin:$HOME/.local/bin:$HOME/.elan/bin"
-export UV_PROJECT_ENVIRONMENT="$HOME/.cache/venvs/${PWD//\//-}"
 export EDITOR=nvim
 
 plugins=(zsh-completions python fzf z per-directory-history)
