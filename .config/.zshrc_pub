@@ -59,3 +59,15 @@ source "$FZF_PATH/key-bindings.zsh"
 source "$FZF_PATH/completion.zsh"
 
 eval "$(zoxide init zsh)"
+
+# PyPI mirror auto-detect (cache 1h to avoid delay on every shell)
+_cache_file=/tmp/.china_uv_cache
+if [[ ! -f $_cache_file ]] || [[ $(find $_cache_file -mmin +60) ]]; then
+  if curl -sI --connect-timeout 2 https://www.google.com >/dev/null 2>&1; then
+    echo 0 > $_cache_file
+  else
+    echo 1 > $_cache_file
+  fi
+fi
+[[ $(cat $_cache_file) == "1" ]] && export UV_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple
+unset _cache_file
