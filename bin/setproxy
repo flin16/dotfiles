@@ -1,0 +1,29 @@
+#!/bin/bash
+# proxy — set/unset http_proxy/https_proxy, remembers last port
+# Usage:  . proxy [port]   or   source proxy [port]
+#         proxy        — use saved port
+#         proxy 7892   — set to port 7892
+#         proxy off    — unset
+
+CACHE="$HOME/.cache/proxy_port"
+mkdir -p "$(dirname "$CACHE")"
+
+case "${1:-}" in
+  off)
+    printf "%s\n" "unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY all_proxy ALL_PROXY"
+    exit 0
+    ;;
+  "")
+    if [[ -f "$CACHE" ]]; then
+      PORT=$(cat "$CACHE")
+    else
+      exit 1
+    fi
+    ;;
+  *)
+    PORT="$1"
+    echo "$PORT" > "$CACHE"
+    ;;
+esac
+
+printf "export http_proxy=http://127.0.0.1:%s\nexport https_proxy=http://127.0.0.1:%s\nexport HTTP_PROXY=http://127.0.0.1:%s\nexport HTTPS_PROXY=http://127.0.0.1:%s\nexport all_proxy=socks5://127.0.0.1:%s\nexport ALL_PROXY=socks5://127.0.0.1:%s\n" "$PORT" "$PORT" "$PORT" "$PORT" "$PORT" "$PORT"
