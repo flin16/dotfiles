@@ -39,6 +39,21 @@ def get_active_profile() -> str | None:
     return None
 
 
+def find_active_profile_upwards() -> tuple[str | None, Path | None]:
+    """Walk from cwd upward looking for .claude/settings.json with activeProfile."""
+    current = Path.cwd()
+    for parent in [current] + list(current.parents):
+        settings = parent / SETTINGS_FILE
+        if settings.exists():
+            try:
+                data = json.loads(settings.read_text())
+                if "activeProfile" in data:
+                    return data["activeProfile"], settings
+            except (json.JSONDecodeError, OSError):
+                continue
+    return None, None
+
+
 def save_profile(name: str, data: dict):
     ensure_profile_dir()
     path = PROFILE_DIR / f"{name}.json"
@@ -88,16 +103,14 @@ def activate_profile(name: str):
 
 
 def deactivate_profile():
-    if not SETTINGS_FILE.exists():
-        print("No active profile to deactivate.")
+    active_name, active_path = find_active_profile_upwards()
+    if not active_name or not active_path:
+        print("No active profile found.")
         return
-    data = json.loads(SETTINGS_FILE.read_text())
-    profile_name = data.pop("activeProfile", None)
-    if profile_name:
-        SETTINGS_FILE.write_text(json.dumps(data, indent=2, ensure_ascii=False))
-        print(f"Profile '{profile_name}' deactivated.")
-    else:
-        print("No active profile.")
+    data = json.loads(active_path.read_text())
+    data.pop("activeProfile", None)
+    active_path.write_text(json.dumps(data, indent=2, ensure_ascii=False))
+    print(f"Profile '{active_name}' deactivated in {active_path.parent.resolve()}")
 
 
 def show_profile(name: str):
@@ -127,15 +140,15 @@ def cmd_add(args):
 
 def cmd_list(args):
     profiles = list_profiles()
-    active = get_active_profile()
+    active_name, active_path = find_active_profile_upwards()
     if not profiles:
         print("(no profiles — use claw-profile add to create one)")
     else:
         for n in profiles:
-            mark = " [active]" if n == active else ""
+            mark = " [active]" if n == active_name else ""
             print(f"  {n}{mark}")
-    if active:
-        print(f"\nActive: {active}")
+    if active_name:
+        print(f"\nActive: {active_name}  ({active_path.parent.resolve()})")
     else:
         print("No active profile.")
 
@@ -210,8 +223,8 @@ def main():
     p_act = sub.add_parser("activate", help="Activate a profile")
     p_act.add_argument("name", help="Profile name")
 
-    # deactivate
-    p_deact = sub.add_parser("deactivate", help="Deactivate the current profile")
+    # deactive
+    p_deact = sub.add_parser("deactive", help="Deactivate the current profile")
 
     # remove
     p_rm = sub.add_parser("remove", help="Remove a custom profile")
@@ -245,7 +258,7 @@ def main():
         cmd_add(args)
     elif args.command == "activate":
         cmd_activate(args)
-    elif args.command == "deactivate":
+    elif args.command == "deactive":
         cmd_deactivate(args)
     elif args.command == "remove":
         cmd_remove(args)

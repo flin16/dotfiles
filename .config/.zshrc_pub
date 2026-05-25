@@ -22,10 +22,6 @@ fi
 
 FPATH=~/.local/share/zsh/site-functions:$FPATH
 
-# before every completion
-autoload -Uz compinit && compinit
-autoload -Uz bashcompinit && bashcompinit
-
 venv() {
     if [ -z "$1" ]; then
         ls ~/venv/
@@ -60,14 +56,35 @@ source "$FZF_PATH/completion.zsh"
 
 eval "$(zoxide init zsh)"
 
-# PyPI mirror auto-detect (cache 1h to avoid delay on every shell)
-_cache_file=/tmp/.china_uv_cache
-if [[ ! -f $_cache_file ]] || [[ $(find $_cache_file -mmin +60) ]]; then
-  if curl -sI --connect-timeout 2 https://www.google.com >/dev/null 2>&1; then
-    echo 0 > $_cache_file
-  else
-    echo 1 > $_cache_file
-  fi
+# Mirror auto-detect for China (lazy — only re-check when cache is 6+ hours old)
+_cache_file=/tmp/.china_mirror_cache
+if [[ ! -f $_cache_file ]] || [[ $(find $_cache_file -mmin +360) ]]; then
+  (curl -sI --connect-timeout 1 https://www.google.com >/dev/null 2>&1 && echo 0 || echo 1) > $_cache_file &!
 fi
-[[ $(cat $_cache_file) == "1" ]] && export UV_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple
+if [[ -f $_cache_file ]] && [[ $(cat $_cache_file) == "1" ]]; then
+  export UV_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple
+  export HOMEBREW_API_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api
+  export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
+  export HOMEBREW_BREW_GIT_REMOTE=https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git
+  export HOMEBREW_CORE_GIT_REMOTE=https://git.homebrew/homebrew-core.git
+  export HOMEBREW_PIP_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple
+fi
 unset _cache_file
+
+# Proxy switcher: proxy <port>, proxy, proxy off
+proxy() {
+  local output
+  output=$(command proxy "$@")
+  local ret=$?
+  if [[ $ret -ne 0 ]]; then
+    echo "No saved proxy port. Usage: proxy <port>"
+    return 1
+  fi
+  if [[ "$1" == "off" ]]; then
+    eval "$output"
+    echo "proxy disabled"
+  else
+    eval "$output"
+    echo "→ proxy 127.0.0.1:$(cat "$HOME/.cache/proxy_port" 2>/dev/null)"
+  fi
+}

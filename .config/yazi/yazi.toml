@@ -1,11 +1,13 @@
 [[plugin.prepend_fetchers]]
+group = "git"
 id = "git"
-name = "*"
+url = "*"
 run = "git"
 
 [[plugin.prepend_fetchers]]
+group = "git"
 id = "git"
-name = "*/"
+url = "*/"
 run = "git"
 
 [[plugin.prepend_previewers]]
@@ -17,13 +19,15 @@ mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}"
 run = "lsar"
 
 [[plugin.prepend_fetchers]]
+group = "mactag"
 id = "mactag"
-name = "*"
+url = "*"
 run = "mactag"
 
 [[plugin.prepend_fetchers]]
+group = "mactag"
 id = "mactag"
-name = "*/"
+url = "*/"
 run = "mactag"
 
 [[plugin.prepend_previewers]]
