@@ -88,3 +88,5 @@ proxy() {
     echo "→ proxy 127.0.0.1:$(cat "$HOME/.cache/proxy_port" 2>/dev/null)"
   fi
 }
+
+bindkey '^T' transpose-chars
