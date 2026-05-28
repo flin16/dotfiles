@@ -21,6 +21,7 @@ ffmpeg
 vlc
 mpv
 imagemagick
+chafa
 xdg-utils
 xdg-user-dirs
 mesa
